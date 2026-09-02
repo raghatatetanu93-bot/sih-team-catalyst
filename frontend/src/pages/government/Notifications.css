@@ -1,0 +1,287 @@
+.notifications-page {
+  min-height: 100vh;
+  padding: 48px 56px;
+  background: #f7f9fc;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 45px;
+}
+
+.page-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #28777c;
+}
+
+.notifications-header h1 {
+  margin: 10px 0 10px;
+  font-size: 38px;
+  color: #24364b;
+}
+
+.notifications-header p {
+  margin: 0;
+  font-size: 16px;
+  color: #718096;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.notifications-header-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  background: #e3f1f1;
+  color: #28777c;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ACTIONS */
+
+.notifications-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.notifications-actions h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  color: #24364b;
+}
+
+.notifications-actions p {
+  margin: 0;
+  color: #718096;
+}
+
+.mark-read-button {
+  border: 1px solid #d8e1e8;
+  background: white;
+  color: #28777c;
+
+  padding: 12px 20px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.mark-read-button:hover {
+  background: #eaf5f5;
+}
+
+
+/* NOTIFICATION LIST */
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notification-card {
+  display: flex;
+  gap: 20px;
+
+  background: white;
+
+  border: 1px solid #e1e7ec;
+  border-radius: 16px;
+
+  padding: 22px;
+
+  transition: 0.2s ease;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.notification-card.unread {
+  border-left: 4px solid #2c8a8f;
+}
+
+
+/* ICON */
+
+.notification-icon {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-icon.progress {
+  background: #e8edf9;
+  color: #5b6fb3;
+}
+
+.notification-icon.resolved {
+  background: #e5f4ec;
+  color: #39865a;
+}
+
+.notification-icon.emergency {
+  background: #fbeaea;
+  color: #d94a4a;
+}
+
+.notification-icon.community {
+  background: #e7f3f2;
+  color: #28777c;
+}
+
+
+/* CONTENT */
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification-top h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #24364b;
+}
+
+.notification-content p {
+  margin: 8px 0;
+  color: #718096;
+  line-height: 1.6;
+  max-width: 750px;
+}
+
+.notification-time {
+  font-size: 13px;
+  color: #9aa6b2;
+}
+
+
+/* UNREAD DOT */
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #2c8a8f;
+}
+
+
+/* SETTINGS CARD */
+
+.notification-settings {
+  margin-top: 35px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 22px 25px;
+
+  background: #eaf5f5;
+
+  border-radius: 16px;
+
+  color: #28777c;
+}
+
+.notification-settings div {
+  flex: 1;
+}
+
+.notification-settings h3 {
+  margin: 0 0 5px;
+  color: #24364b;
+  font-size: 16px;
+}
+
+.notification-settings p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+}
+
+.notification-settings button {
+  border: none;
+
+  background: white;
+
+  color: #28777c;
+
+  padding: 10px 18px;
+
+  border-radius: 9px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.notification-settings button:hover {
+  background: #dceeee;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .notifications-page {
+    padding: 30px 20px;
+  }
+
+  .notifications-header {
+    align-items: flex-start;
+  }
+
+  .notifications-header h1 {
+    font-size: 30px;
+  }
+
+  .notifications-header-icon {
+    display: none;
+  }
+
+  .notifications-actions {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .notification-settings {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+}

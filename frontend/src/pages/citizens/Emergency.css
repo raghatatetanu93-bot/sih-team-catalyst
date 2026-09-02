@@ -1,0 +1,461 @@
+.emergency-page {
+  min-height: 100vh;
+  padding: 40px 48px;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+
+/* HEADER */
+
+.emergency-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.emergency-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #dc2626;
+}
+
+.emergency-header h1 {
+  margin: 8px 0 10px;
+  font-size: 34px;
+  color: #172033;
+}
+
+.emergency-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+  max-width: 550px;
+  line-height: 1.6;
+}
+
+.emergency-header-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+
+  background: #feecec;
+  color: #dc2626;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* EMERGENCY HERO */
+
+.emergency-hero {
+  background: linear-gradient(135deg, #991b1b, #dc2626);
+
+  border-radius: 24px;
+
+  padding: 35px 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  color: white;
+
+  margin-bottom: 38px;
+}
+
+.urgent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  padding: 8px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+}
+
+.emergency-hero h2 {
+  font-size: 30px;
+  line-height: 1.25;
+
+  margin: 18px 0 12px;
+}
+
+.emergency-hero p {
+  margin: 0;
+
+  max-width: 580px;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  line-height: 1.6;
+
+  font-size: 14px;
+}
+
+.emergency-main-button {
+  min-width: 210px;
+
+  padding: 15px 18px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: white;
+
+  color: #b91c1c;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.emergency-main-button:hover {
+  transform: translateY(-2px);
+}
+
+
+/* SECTION HEADERS */
+
+.emergency-section-header span,
+.section-small-label {
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+
+  color: #dc2626;
+}
+
+.emergency-section-header h2 {
+  margin: 8px 0;
+
+  font-size: 25px;
+
+  color: #172033;
+}
+
+.emergency-section-header p {
+  margin: 0 0 24px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* EMERGENCY TYPES */
+
+.emergency-types-section {
+  margin-bottom: 38px;
+}
+
+.emergency-types-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 16px;
+}
+
+.emergency-type-card {
+  background: white;
+
+  border: 1px solid #e7edf1;
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  color: #334155;
+}
+
+.emergency-type-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #fca5a5;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.emergency-type-card > svg {
+  align-self: flex-end;
+
+  color: #94a3b8;
+}
+
+.emergency-type-icon {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 14px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emergency-type-card strong {
+  display: block;
+
+  font-size: 14px;
+
+  margin-bottom: 5px;
+}
+
+.emergency-type-card span {
+  font-size: 12px;
+
+  color: #94a3b8;
+
+  line-height: 1.5;
+}
+
+
+/* BOTTOM SECTION */
+
+.emergency-bottom-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 24px;
+}
+
+
+/* CONTACTS */
+
+.emergency-contacts,
+.nearby-alerts {
+  background: white;
+
+  border: 1px solid #e7edf1;
+
+  border-radius: 20px;
+
+  padding: 28px;
+}
+
+.emergency-contacts h2,
+.nearby-alerts h2 {
+  margin: 8px 0 22px;
+
+  font-size: 21px;
+
+  color: #172033;
+}
+
+.contact-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #edf0f2;
+}
+
+.contact-row:last-child {
+  border-bottom: none;
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 12px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-row > div:nth-child(2) {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  flex: 1;
+}
+
+.contact-row strong {
+  font-size: 14px;
+
+  color: #334155;
+}
+
+.contact-row span {
+  font-size: 13px;
+
+  color: #dc2626;
+
+  font-weight: 600;
+}
+
+.contact-row > svg {
+  color: #94a3b8;
+}
+
+
+/* NEARBY ALERTS */
+
+.alerts-heading {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+}
+
+.alerts-heading > svg {
+  color: #dc2626;
+}
+
+.nearby-alert-card {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px;
+
+  background: #fffafa;
+
+  border: 1px solid #fee2e2;
+
+  border-radius: 14px;
+
+  margin-bottom: 12px;
+}
+
+.nearby-alert-card strong {
+  display: block;
+
+  font-size: 14px;
+
+  color: #334155;
+
+  margin-bottom: 7px;
+}
+
+.nearby-alert-card div > span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 12px;
+
+  color: #94a3b8;
+}
+
+.severity {
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.severity.high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.severity.moderate {
+  background: #fff7e6;
+  color: #b7791f;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+
+  .emergency-types-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  .emergency-page {
+    padding: 25px 20px;
+  }
+
+  .emergency-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .emergency-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emergency-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .emergency-types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emergency-header h1 {
+    font-size: 27px;
+  }
+
+}

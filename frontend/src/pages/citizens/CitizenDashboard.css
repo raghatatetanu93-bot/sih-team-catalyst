@@ -1,0 +1,664 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+.citizen-dashboard {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 32px 38px 40px;
+  color: #1e2d42;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.citizen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.citizen-header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1d2d42;
+}
+
+.citizen-header h1 span {
+  font-size: 30px;
+}
+
+.citizen-header p {
+  margin: 0;
+  font-size: 17px;
+  color: #64748b;
+}
+
+.citizen-header-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+
+/* NOTIFICATION */
+
+.notification-button {
+  width: 55px;
+  height: 55px;
+  border-radius: 18px;
+  border: none;
+  background: white;
+  color: #25364b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(20, 40, 70, 0.08);
+}
+
+.notification-dot {
+  width: 9px;
+  height: 9px;
+  background: #ef4444;
+  border-radius: 50%;
+  position: absolute;
+  top: 11px;
+  right: 12px;
+}
+
+
+/* PROFILE */
+
+.citizen-profile {
+  height: 55px;
+  padding: 0 18px 0 8px;
+  background: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #334155;
+  box-shadow: 0 4px 15px rgba(20, 40, 70, 0.08);
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #157b78;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.profile-arrow {
+  font-size: 21px;
+  margin-left: 3px;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-section {
+  margin-bottom: 36px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.quick-action {
+  background: white;
+  border: 1px solid #e3e8ee;
+  border-radius: 24px;
+  min-height: 142px;
+  padding: 25px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.quick-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(25, 45, 75, 0.09);
+}
+
+.quick-icon {
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quick-text strong {
+  font-size: 19px;
+  color: #23324a;
+}
+
+.quick-text span {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.quick-arrow {
+  margin-left: auto;
+  width: 43px;
+  height: 43px;
+  min-width: 43px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* REPORT */
+
+.quick-action.report .quick-icon {
+  background: #e5f0fb;
+  color: #2d70b8;
+}
+
+.quick-action.report .quick-arrow {
+  background: #e9f1fb;
+  color: #3678bb;
+}
+
+
+/* REPORTS */
+
+.quick-action.reports .quick-icon {
+  background: #eee9fb;
+  color: #7047c4;
+}
+
+.quick-action.reports .quick-arrow {
+  background: #f0ecfb;
+  color: #7047c4;
+}
+
+
+/* COMMUNITY */
+
+.quick-action.community .quick-icon {
+  background: #e3f5e8;
+  color: #16834d;
+}
+
+.quick-action.community .quick-arrow {
+  background: #e8f6ed;
+  color: #16834d;
+}
+
+
+/* EMERGENCY */
+
+.quick-action.emergency {
+  border-color: #f0dada;
+}
+
+.quick-action.emergency .quick-icon {
+  background: #fdeaea;
+  color: #dc2626;
+}
+
+.quick-action.emergency .quick-text strong {
+  color: #b72b2b;
+}
+
+.quick-action.emergency .quick-arrow {
+  background: #fff0f0;
+  color: #dc2626;
+}
+
+
+/* =========================
+   COMMUNITY PULSE
+========================= */
+
+.pulse-section {
+  margin-bottom: 30px;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #23736f;
+}
+
+.section-title-row h2 {
+  margin: 9px 0 7px;
+  font-size: 29px;
+  color: #213148;
+}
+
+.section-title-row p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.explore-button {
+  border: none;
+  background: transparent;
+  color: #176d68;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding-bottom: 8px;
+}
+
+
+/* =========================
+   ISSUE CARDS
+========================= */
+
+.issue-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+}
+
+.issue-card {
+  background: white;
+  border: 1px solid #e2e7ed;
+  border-radius: 28px;
+  padding: 23px 25px 20px;
+  min-height: 255px;
+  box-shadow: 0 6px 20px rgba(30, 45, 70, 0.04);
+}
+
+.issue-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.issue-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-badge {
+  padding: 10px 18px;
+  border-radius: 22px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* WATER */
+
+.issue-card.water .issue-icon {
+  background: #e2f3f4;
+  color: #237b7c;
+}
+
+.issue-card.water .category-badge {
+  background: #edf6f7;
+  color: #28777a;
+}
+
+.issue-card.water .report-count strong {
+  color: #237b7c;
+}
+
+.issue-card.water .issue-arrow {
+  background: #e6f4f4;
+  color: #237b7c;
+}
+
+
+/* SANITATION */
+
+.issue-card.sanitation .issue-icon {
+  background: #e8f5e7;
+  color: #398a47;
+}
+
+.issue-card.sanitation .category-badge {
+  background: #edf7ed;
+  color: #4c8753;
+}
+
+.issue-card.sanitation .report-count strong {
+  color: #398a47;
+}
+
+.issue-card.sanitation .issue-arrow {
+  background: #ebf7eb;
+  color: #398a47;
+}
+
+
+/* INFRASTRUCTURE */
+
+.issue-card.infrastructure .issue-icon {
+  background: #fff1df;
+  color: #d17a19;
+}
+
+.issue-card.infrastructure .category-badge {
+  background: #fff5e8;
+  color: #bc741e;
+}
+
+.issue-card.infrastructure .report-count strong {
+  color: #c76e12;
+}
+
+.issue-card.infrastructure .issue-arrow {
+  background: #fff4e7;
+  color: #c76e12;
+}
+
+
+.issue-card h3 {
+  font-size: 20px;
+  line-height: 1.42;
+  margin: 18px 0 13px;
+  color: #25344a;
+}
+
+.issue-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 15px;
+}
+
+.issue-location svg {
+  color: #5c6c80;
+}
+
+.issue-divider {
+  height: 1px;
+  background: #edf0f3;
+  margin: 17px 0;
+}
+
+.issue-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-count {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-count strong {
+  font-size: 23px;
+  margin-bottom: 3px;
+}
+
+.report-count span {
+  color: #718096;
+  font-size: 14px;
+}
+
+.issue-arrow {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+/* =========================
+   IMPACT SECTION
+========================= */
+
+.citizen-impact {
+  min-height: 215px;
+  border-radius: 30px;
+  background: linear-gradient(110deg, #0b4550, #082d3a);
+  display: grid;
+  grid-template-columns: 1.1fr 1.2fr 2fr;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 38px;
+  color: white;
+}
+
+
+/* SIMPLE DECORATIVE ILLUSTRATION */
+
+.impact-illustration {
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sun {
+  width: 55px;
+  height: 55px;
+  background: #f7c85b;
+  border-radius: 50%;
+  position: absolute;
+  top: 38px;
+  right: 50px;
+  box-shadow: 0 0 30px rgba(247, 200, 91, 0.5);
+}
+
+.people-illustration {
+  font-size: 90px;
+  position: relative;
+  z-index: 2;
+}
+
+.plant {
+  position: absolute;
+  bottom: -20px;
+  width: 45px;
+  height: 110px;
+  border-radius: 50% 50% 0 0;
+  background: #176f66;
+}
+
+.plant-one {
+  left: 30px;
+}
+
+.plant-two {
+  right: 20px;
+  height: 80px;
+  background: #27806f;
+}
+
+
+/* IMPACT TEXT */
+
+.impact-content {
+  padding: 25px 35px;
+}
+
+.impact-label {
+  color: #60d1c7;
+  font-size: 13px;
+  letter-spacing: 1.8px;
+  font-weight: 700;
+}
+
+.impact-content h2 {
+  font-size: 29px;
+  line-height: 1.15;
+  margin: 10px 0;
+  color: white;
+}
+
+.impact-content p {
+  margin: 0;
+  max-width: 300px;
+  color: #c9d7da;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+
+/* IMPACT STATS */
+
+.impact-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 65%;
+}
+
+.impact-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  text-align: center;
+}
+
+.impact-stat-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
+  background: #e2f2ee;
+  color: #17736c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.impact-stat-icon.purple {
+  background: #eee8fb;
+  color: #7b5bc7;
+}
+
+.impact-stat strong {
+  color: #58cda1;
+  font-size: 31px;
+  margin-bottom: 7px;
+}
+
+.impact-stat .purple-text {
+  color: #b58cff;
+}
+
+.impact-stat span {
+  color: #d3dce0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .issue-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .citizen-impact {
+    grid-template-columns: 1fr;
+    padding: 30px;
+    gap: 20px;
+  }
+
+  .impact-illustration {
+    display: none;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .citizen-dashboard {
+    padding: 22px;
+  }
+
+  .citizen-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .impact-stats {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .impact-stat {
+    border-left: none;
+  }
+
+}

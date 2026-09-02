@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./UniversityMatching.css";
 import {
   GraduationCap,
@@ -12,6 +13,8 @@ import {
 } from "lucide-react";
 
 function UniversityMatching() {
+    const navigate = useNavigate();
+
   const matches = [
     {
       id: 1,
@@ -279,11 +282,13 @@ function UniversityMatching() {
 
               {/* ACTION */}
 
-              <button className="match-view-button">
-                View Profile
-                <ArrowUpRight size={15} />
-              </button>
-
+             <button
+  className="match-view-button"
+  onClick={() => navigate(`/university-profile/${match.id}`)}
+>
+  View Profile
+  <ArrowUpRight size={15} />
+</button>
             </div>
           ))}
 

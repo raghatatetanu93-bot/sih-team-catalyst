@@ -1,0 +1,383 @@
+.community-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 48px;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+
+/* ================= HEADER ================= */
+
+.community-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #0f766e;
+}
+
+.community-header h1 {
+  margin: 8px 0;
+  font-size: 36px;
+  color: #172033;
+}
+
+.community-header p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.community-header-icon {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 16px;
+
+  background: #e8f5f4;
+  color: #0f766e;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ================= INTRO ================= */
+
+.community-intro {
+  background: linear-gradient(135deg, #103c42, #0f5c63);
+
+  border-radius: 22px;
+
+  padding: 32px 36px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 40px;
+
+  margin-bottom: 45px;
+}
+
+.community-intro-text {
+  max-width: 520px;
+}
+
+.community-intro-text span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #79d4ce;
+}
+
+.community-intro-text h2 {
+  margin: 10px 0;
+  font-size: 28px;
+  color: white;
+}
+
+.community-intro-text p {
+  margin: 0;
+  line-height: 1.6;
+  color: #cce8e6;
+}
+
+.community-intro-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.community-intro-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.community-intro-stats strong {
+  font-size: 26px;
+  color: white;
+}
+
+.community-intro-stats span {
+  font-size: 12px;
+  color: #b9d9d7;
+}
+
+
+/* ================= SECTION HEADER ================= */
+
+.community-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-bottom: 25px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #0f766e;
+}
+
+.community-section-header h2 {
+  margin: 7px 0;
+  font-size: 28px;
+  color: #172033;
+}
+
+.community-section-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.community-filter {
+  padding: 11px 18px;
+
+  border-radius: 10px;
+
+  border: 1px solid #dce5ea;
+
+  background: white;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+
+/* ================= ISSUE GRID ================= */
+
+.community-issues-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+
+/* ================= ISSUE CARD ================= */
+
+.community-issue-card {
+  background: white;
+
+  border: 1px solid #e7edf1;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  transition: 0.25s ease;
+}
+
+.community-issue-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* TOP */
+
+.community-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.community-issue-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* CATEGORY COLORS */
+
+.water .community-issue-icon {
+  background: #e6f5f7;
+  color: #247a85;
+}
+
+.sanitation .community-issue-icon {
+  background: #edf7ed;
+  color: #3d8a50;
+}
+
+.infrastructure .community-issue-icon {
+  background: #fff3e3;
+  color: #c57a19;
+}
+
+.community-category {
+  padding: 8px 13px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  background: #f3f6f7;
+  color: #475569;
+}
+
+
+/* TITLE */
+
+.community-issue-card h3 {
+  margin: 0 0 15px;
+
+  font-size: 18px;
+  line-height: 1.45;
+
+  color: #1e293b;
+}
+
+
+/* LOCATION */
+
+.community-location {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* DIVIDER */
+
+.community-divider {
+  height: 1px;
+
+  background: #edf0f2;
+
+  margin: 20px 0;
+}
+
+
+/* ENGAGEMENT */
+
+.community-engagement {
+  display: flex;
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.engagement-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  font-size: 12px;
+
+  color: #64748b;
+}
+
+
+/* BUTTON */
+
+.view-community-issue {
+  width: 100%;
+
+  padding: 11px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #edf7f6;
+
+  color: #0f766e;
+
+  font-weight: 600;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.view-community-issue:hover {
+  background: #0f766e;
+  color: white;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1100px) {
+
+  .community-issues-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .community-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .community-page {
+    padding: 25px 20px;
+  }
+
+  .community-header {
+    align-items: flex-start;
+  }
+
+  .community-header-icon {
+    display: none;
+  }
+
+  .community-issues-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .community-intro-stats {
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+}
