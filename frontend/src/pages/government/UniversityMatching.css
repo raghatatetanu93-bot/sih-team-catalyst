@@ -1,0 +1,554 @@
+/* ================================
+   UNIVERSITY MATCHING PAGE
+================================ */
+
+.matching-page {
+  padding: 32px 36px 50px;
+  background: #f7f8fc;
+  min-height: 100vh;
+  color: #17182b;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.matching-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #686b85;
+}
+
+.matching-title-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.matching-title-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ece9ff;
+  color: #6254d9;
+}
+
+.matching-header h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #17182b;
+}
+
+.matching-subtitle {
+  margin: 10px 0 0 57px;
+  color: #777a91;
+  font-size: 14px;
+  max-width: 690px;
+  line-height: 1.6;
+}
+
+.matching-ai-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 20px;
+  background: #edf9f1;
+  color: #25844b;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #d5efde;
+}
+
+.matching-ai-status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #32a85d;
+}
+
+/* ================================
+   SELECTED PROBLEM
+================================ */
+
+.selected-problem {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: white;
+  border: 1px solid #e5e6ef;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 3px 12px rgba(25, 28, 50, 0.04);
+}
+
+.selected-problem-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #edf0ff;
+  color: #5364d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-problem-content {
+  flex: 1;
+}
+
+.selected-problem-content > span {
+  display: block;
+  margin-bottom: 3px;
+  color: #85879b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.selected-problem-content h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #202239;
+}
+
+.selected-problem-content p {
+  margin: 5px 0 9px;
+  font-size: 13px;
+  color: #777a91;
+  line-height: 1.5;
+}
+
+.problem-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.problem-tags span {
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #f3f4f8;
+  color: #62657c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.change-problem-button {
+  border: 1px solid #dfe1eb;
+  background: white;
+  border-radius: 8px;
+  padding: 9px 13px;
+  color: #55586e;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ================================
+   CRITERIA
+================================ */
+
+.criteria-card {
+  background: white;
+  border: 1px solid #e5e6ef;
+  border-radius: 14px;
+  padding: 21px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 3px 12px rgba(25, 28, 50, 0.04);
+}
+
+.section-heading h2,
+.matches-header h2 {
+  margin: 0;
+  color: #202239;
+  font-size: 17px;
+}
+
+.section-heading p,
+.matches-header p {
+  margin: 5px 0 0;
+  color: #888a9d;
+  font-size: 12px;
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 17px;
+}
+
+.criteria-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 9px;
+  background: #f7f8fb;
+  border: 1px solid #ececf2;
+}
+
+.criteria-item > svg {
+  color: #6860cf;
+  flex-shrink: 0;
+}
+
+.criteria-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.criteria-item strong {
+  font-size: 11px;
+  color: #4c4f65;
+}
+
+.criteria-item span {
+  font-size: 10px;
+  color: #8b8da0;
+}
+
+/* ================================
+   MATCHES
+================================ */
+
+.matches-card {
+  background: white;
+  border: 1px solid #e5e6ef;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(25, 28, 50, 0.04);
+}
+
+.matches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 21px 22px;
+  border-bottom: 1px solid #ececf2;
+}
+
+.match-count {
+  padding: 7px 11px;
+  border-radius: 7px;
+  background: #f1f0ff;
+  color: #5d55c8;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ================================
+   MATCH ROW
+================================ */
+
+.match-row {
+  display: grid;
+  grid-template-columns: 38px minmax(270px, 1.8fr) 105px 190px 120px;
+  align-items: center;
+  gap: 16px;
+  padding: 19px 22px;
+  border-bottom: 1px solid #eeeeF3;
+  transition: background 0.2s ease;
+}
+
+.match-row:last-child {
+  border-bottom: none;
+}
+
+.match-row:hover {
+  background: #fafaff;
+}
+
+.match-rank {
+  font-size: 12px;
+  font-weight: 800;
+  color: #a0a2b2;
+}
+
+.university-main {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.university-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #f0efff;
+  color: #6258d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.university-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.university-name-row h3 {
+  margin: 0;
+  font-size: 13px;
+  color: #292b42;
+  font-weight: 750;
+}
+
+.best-match {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #eaf8ef;
+  color: #29844c;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.university-main p {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 5px 0;
+  color: #898b9e;
+  font-size: 11px;
+}
+
+.expertise {
+  display: inline-block;
+  color: #676a80;
+  font-size: 10px;
+}
+
+/* ================================
+   MATCH SCORE
+================================ */
+
+.match-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.score-circle {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  border: 4px solid #dcd9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-circle strong {
+  font-size: 12px;
+  color: #5d54ce;
+}
+
+.match-score > span {
+  font-size: 9px;
+  color: #9294a5;
+}
+
+/* ================================
+   CAPABILITY
+================================ */
+
+.capability {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.capability div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #777a90;
+  font-size: 10px;
+}
+
+.capability svg {
+  color: #8587a0;
+}
+
+.capacity {
+  width: fit-content;
+  margin-top: 2px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.capacity.available {
+  background: #eaf8ef;
+  color: #29844c;
+}
+
+.capacity.limited {
+  background: #fff5e5;
+  color: #a16c20;
+}
+
+/* ================================
+   ACTION
+================================ */
+
+.match-view-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #ddddea;
+  background: white;
+  border-radius: 8px;
+  padding: 9px 10px;
+  color: #55586e;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.match-view-button:hover {
+  background: #f4f3ff;
+  border-color: #d7d3fa;
+  color: #5d55c8;
+}
+
+/* ================================
+   WHY MATCH
+================================ */
+
+.why-match-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 22px;
+  padding: 17px 20px;
+  border: 1px solid #e5e6ef;
+  border-radius: 12px;
+  background: #fbfbff;
+}
+
+.why-match-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #eceaff;
+  color: #665bd1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-match-card strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #36384e;
+  font-size: 12px;
+}
+
+.why-match-card p {
+  margin: 0;
+  color: #777a91;
+  font-size: 11px;
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+  .criteria-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .match-row {
+    grid-template-columns: 30px minmax(220px, 1fr) 90px 150px 110px;
+  }
+}
+
+@media (max-width: 850px) {
+  .matching-page {
+    padding: 24px 18px;
+  }
+
+  .matching-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .matching-subtitle {
+    margin-left: 0;
+  }
+
+  .selected-problem {
+    flex-wrap: wrap;
+  }
+
+  .change-problem-button {
+    margin-left: 64px;
+  }
+
+  .criteria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .match-row {
+    grid-template-columns: 30px 1fr;
+  }
+
+  .match-score,
+  .capability,
+  .match-view-button {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .match-score {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 550px) {
+  .matching-header h1 {
+    font-size: 22px;
+  }
+
+  .criteria-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-problem {
+    align-items: flex-start;
+  }
+
+  .change-problem-button {
+    margin-left: 0;
+  }
+}
