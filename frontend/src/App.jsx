@@ -33,6 +33,28 @@ import Emergency from "./pages/citizens/Emergency";
 import Notifications from "./pages/citizens/Notifications";
 
 // =========================
+// UNIVERSITY PAGES
+// =========================
+
+import UniversityDashboard from "./pages/university/UniversityDashboard";
+import AvailableChallenges from "./pages/university/AvailableChallenges";
+import ChallengeDetails from "./pages/university/ChallengeDetails";
+import UniversityProjects from "./pages/university/UniversityProjects";
+import ProjectCollaboration from "./pages/university/ProjectCollaboration";
+import UniversityImpact from "./pages/university/UniversityImpact";
+
+// =========================
+// INDUSTRY PAGES
+// =========================
+
+import IndustryDashboard from "./pages/industry/IndustryDashboard";
+import AvailableProjects from "./pages/industry/AvailableProjects";
+import IndustryProjectDetails from "./pages/industry/IndustryProjectDetails";
+import FundingOpportunities from "./pages/industry/FundingOpportunities";
+import Partnerships from "./pages/industry/Partnerships";
+import IndustryImpact from "./pages/industry/IndustryImpact";
+
+// =========================
 // CSS
 // =========================
 
@@ -53,6 +75,9 @@ function AppContent() {
     location.pathname === "/citizen-emergency" ||
     location.pathname === "/notifications";
 
+  const isUniversityPage = location.pathname.startsWith("/university");
+  const isIndustryPage = location.pathname.startsWith("/industry");
+
   return (
     <div
       style={{
@@ -61,7 +86,7 @@ function AppContent() {
       }}
     >
       {/* SIDEBAR */}
-      <Sidebar role={isCitizenPage ? "citizen" : "government"} />
+      <Sidebar role={isCitizenPage ? "citizen" : isUniversityPage ? "university" : isIndustryPage ? "industry" : "government"} />
 
       {/* MAIN CONTENT */}
       <main
@@ -180,6 +205,64 @@ function AppContent() {
           <Route
             path="/notifications"
             element={<Notifications />}
+          />
+
+          {/* ========================= */}
+          {/* UNIVERSITY ROUTES */}
+          {/* ========================= */}
+
+          <Route
+            path="/university"
+            element={<UniversityDashboard />}
+          />
+          <Route
+            path="/university/challenges"
+            element={<AvailableChallenges />}
+          />
+          <Route
+            path="/university/challenges/:id"
+            element={<ChallengeDetails />}
+          />
+          <Route
+            path="/university/projects"
+            element={<UniversityProjects />}
+          />
+          <Route
+            path="/university/projects/:id"
+            element={<ProjectCollaboration />}
+          />
+          <Route
+            path="/university/impact"
+            element={<UniversityImpact />}
+          />
+
+          {/* ========================= */}
+          {/* INDUSTRY ROUTES */}
+          {/* ========================= */}
+
+          <Route
+            path="/industry"
+            element={<IndustryDashboard />}
+          />
+          <Route
+            path="/industry/projects"
+            element={<AvailableProjects />}
+          />
+          <Route
+            path="/industry/projects/:id"
+            element={<IndustryProjectDetails />}
+          />
+          <Route
+            path="/industry/funding"
+            element={<FundingOpportunities />}
+          />
+          <Route
+            path="/industry/partnerships"
+            element={<Partnerships />}
+          />
+          <Route
+            path="/industry/impact"
+            element={<IndustryImpact />}
           />
 
         </Routes>

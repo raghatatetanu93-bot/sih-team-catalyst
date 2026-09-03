@@ -1,0 +1,259 @@
+.industry-impact-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.impact-header {
+  margin-bottom: 2rem;
+}
+
+.impact-header h1 {
+  font-size: 2rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.impact-header p {
+  color: #64748b;
+}
+
+.impact-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.impact-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.impact-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+}
+
+.impact-stat-icon.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.impact-stat-icon.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.impact-stat-icon.amber {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.impact-stat-icon.purple {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.impact-stat-icon.teal {
+  background: #ccfbf1;
+  color: #0d9488;
+}
+
+.impact-stat-icon.rose {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+.impact-stat-card h2 {
+  font-size: 1.75rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.impact-stat-card p {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.impact-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.impact-area-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.impact-area-card h3 {
+  font-size: 1.1rem;
+  color: #0f172a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.impact-area-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.impact-area-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.impact-area-item:last-child {
+  border-bottom: none;
+}
+
+.impact-area-item span:first-child {
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.impact-area-item span:last-child {
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.impact-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.impact-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.impact-panel h3 {
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-bottom: 1.25rem;
+}
+
+/* Project outcome card */
+.outcome-card {
+  padding: 1.25rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.outcome-card:last-child {
+  margin-bottom: 0;
+}
+
+.outcome-card h4 {
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.outcome-contribution {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+.outcome-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.outcome-metric {
+  background: white;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #475569;
+  font-weight: 500;
+  border: 1px solid #e2e8f0;
+}
+
+/* Before vs After */
+.comparison-card {
+  padding: 1.25rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.comparison-card:last-child {
+  margin-bottom: 0;
+}
+
+.comparison-card h4 {
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.comparison-before,
+.comparison-after {
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.comparison-before {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.comparison-after {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.comparison-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .impact-panels {
+    grid-template-columns: 1fr;
+  }
+}

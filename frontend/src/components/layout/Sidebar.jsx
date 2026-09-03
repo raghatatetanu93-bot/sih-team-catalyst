@@ -108,19 +108,22 @@ function Sidebar({ role = "government" }) {
     {
       label: "Dashboard",
       icon: LayoutDashboard,
-      path: "/",
+      path: "/university",
     },
     {
       label: "Challenges",
       icon: AlertTriangle,
+      path: "/university/challenges",
     },
     {
       label: "My Projects",
       icon: FolderKanban,
+      path: "/university/projects",
     },
     {
       label: "Impact",
       icon: BarChart3,
+      path: "/university/impact",
     },
   ];
 
@@ -128,19 +131,27 @@ function Sidebar({ role = "government" }) {
     {
       label: "Dashboard",
       icon: LayoutDashboard,
-      path: "/",
+      path: "/industry",
     },
     {
-      label: "Projects",
+      label: "Available Projects",
       icon: FolderKanban,
+      path: "/industry/projects",
     },
     {
-      label: "Support",
+      label: "Funding Opportunities",
       icon: Building2,
+      path: "/industry/funding",
     },
     {
-      label: "Impact",
+      label: "Partnerships",
+      icon: GraduationCap,
+      path: "/industry/partnerships",
+    },
+    {
+      label: "Impact Dashboard",
       icon: BarChart3,
+      path: "/industry/impact",
     },
   ];
 
@@ -172,6 +183,10 @@ function Sidebar({ role = "government" }) {
               ? "Citizen Portal"
               : role === "government"
               ? "Government"
+              : role === "university"
+              ? "University Portal"
+              : role === "industry"
+              ? "Industry Portal"
               : role}
           </span>
         </div>
