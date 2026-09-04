@@ -1,9 +1,10 @@
 const express = require('express');
-const { createProblem, getProblems, updateProblemStatus, getProblemStats } = require('../controllers/problemController');
+const { createProblem, getProblems, getProblemById, updateProblem, getProblemStats } = require('../controllers/problemController');
 const router = express.Router();
 
 router.post('/', createProblem);
 router.get('/', getProblems);
-router.patch('/:id/status', updateProblemStatus);
 router.get('/stats', getProblemStats);
+router.get('/:id', getProblemById);
+router.patch('/:id', updateProblem);
 module.exports = router;

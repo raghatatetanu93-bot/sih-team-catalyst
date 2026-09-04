@@ -309,7 +309,7 @@ function Projects() {
 
                <button
   className="project-view-button"
-  onClick={() => navigate(`/projects/${project.id}`)}
+  onClick={() => navigate(`/government/projects/${project.id}`)}
 >
   View Project
   <ArrowUpRight size={15} />

@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import "./ReportIssue.css";
 import {
   ArrowLeft,
@@ -10,13 +13,79 @@ import {
 } from "lucide-react";
 
 function ReportIssue() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const [formData, setFormData] = useState({
+    description: "",
+    category: "",
+    location: {
+      address: "",
+      district: "",
+      lat: null,
+      lng: null,
+    },
+    severity: "Medium",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleLocationChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      location: {
+        ...prev.location,
+        address: e.target.value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.description || !formData.location.address) {
+      setError("Please provide a description and a location.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      // Ensure location format matches backend expectation
+      const payload = {
+        description: formData.description,
+        location: formData.location,
+      };
+      
+      const response = await api.post("/problems", payload);
+      setSuccess(true);
+      setFormData({
+        description: "",
+        category: "",
+        location: { address: "", district: "", lat: null, lng: null },
+        severity: "Medium",
+      });
+      setTimeout(() => {
+        navigate("/citizen/reports");
+      }, 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to submit report. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="report-issue-page">
-
-      {/* HEADER */}
-
       <div className="report-header">
-        <button className="back-button">
+        <button className="back-button" onClick={() => navigate("/citizen")}>
           <ArrowLeft size={20} />
           Back to Home
         </button>
@@ -24,160 +93,61 @@ function ReportIssue() {
         <div className="report-heading">
           <span>REPORT AN ISSUE</span>
           <h1>What's happening?</h1>
-          <p>
-            Tell us about the problem and we'll help connect it
-            to the right authorities.
-          </p>
+          <p>Tell us about the problem and we'll help connect it to the right authorities.</p>
         </div>
       </div>
-
-
-      {/* FORM CONTAINER */}
 
       <div className="report-form-container">
+        {error && (
+          <div style={{ padding: "1rem", backgroundColor: "#fee2e2", color: "#b91c1c", borderRadius: "8px", marginBottom: "1rem" }}>
+            {error}
+          </div>
+        )}
+        {success && (
+          <div style={{ padding: "1rem", backgroundColor: "#d1fae5", color: "#047857", borderRadius: "8px", marginBottom: "1rem" }}>
+            Report submitted successfully! Redirecting...
+          </div>
+        )}
 
-        {/* PHOTO UPLOAD */}
-
-        <div className="form-section">
-
-          <label className="section-label">
-            Add a photo
-            <span>Optional</span>
-          </label>
-
-          <div className="photo-upload">
-
-            <div className="upload-icon">
-              <Camera size={28} />
+        <form onSubmit={handleSubmit}>
+          <div className="form-section">
+            <label className="section-label">Where is the issue?</label>
+            <div className="location-input">
+              <MapPin size={20} />
+              <input
+                type="text"
+                placeholder="Enter location or area"
+                value={formData.location.address}
+                onChange={handleLocationChange}
+                required
+              />
             </div>
+          </div>
 
-            <div>
-              <strong>Upload a photo</strong>
-              <p>
-                A photo can help authorities understand the issue better.
-              </p>
+          <div className="form-section">
+            <label className="section-label">Describe the problem</label>
+            <textarea
+              name="description"
+              placeholder="Tell us what happened and how it is affecting your community..."
+              value={formData.description}
+              onChange={handleChange}
+              required
+            ></textarea>
+            <p className="helper-text">Include as much detail as possible.</p>
+          </div>
+
+          <div className="submit-section">
+            <div className="privacy-note">
+              <AlertCircle size={17} />
+              Your report will be reviewed before being shared publicly.
             </div>
-
-            <button className="upload-button">
-              <Upload size={17} />
-              Choose Photo
+            <button type="submit" className="submit-report-button" disabled={loading}>
+              {loading ? "Submitting..." : "Submit Report"}
+              {!loading && <Send size={18} />}
             </button>
-
           </div>
-
-        </div>
-
-
-        {/* ISSUE CATEGORY */}
-
-        <div className="form-section">
-
-          <label className="section-label">
-            What type of issue is this?
-          </label>
-
-          <div className="select-field">
-            <span>Select a category</span>
-            <ChevronDown size={19} />
-          </div>
-
-        </div>
-
-
-        {/* LOCATION */}
-
-        <div className="form-section">
-
-          <label className="section-label">
-            Where is the issue?
-          </label>
-
-          <div className="location-input">
-
-            <MapPin size={20} />
-
-            <input
-              type="text"
-              placeholder="Enter location or area"
-            />
-
-          </div>
-
-          <button className="location-button">
-            <MapPin size={16} />
-            Use my current location
-          </button>
-
-        </div>
-
-
-        {/* DESCRIPTION */}
-
-        <div className="form-section">
-
-          <label className="section-label">
-            Describe the problem
-          </label>
-
-          <textarea
-            placeholder="Tell us what happened and how it is affecting your community..."
-          ></textarea>
-
-          <p className="helper-text">
-            Include as much detail as possible.
-          </p>
-
-        </div>
-
-
-        {/* SEVERITY */}
-
-        <div className="form-section">
-
-          <label className="section-label">
-            How urgent is this?
-          </label>
-
-          <div className="severity-options">
-
-            <button className="severity low">
-              <span></span>
-              Low
-            </button>
-
-            <button className="severity medium">
-              <span></span>
-              Medium
-            </button>
-
-            <button className="severity high">
-              <span></span>
-              High
-            </button>
-
-          </div>
-
-        </div>
-
-
-        {/* SUBMIT */}
-
-        <div className="submit-section">
-
-          <div className="privacy-note">
-            <AlertCircle size={17} />
-            Your report will be reviewed before being shared publicly.
-          </div>
-
-          <button className="submit-report-button">
-            Submit Report
-            <Send size={18} />
-          </button>
-
-        </div>
-
+        </form>
       </div>
-
     </div>
   );
 }

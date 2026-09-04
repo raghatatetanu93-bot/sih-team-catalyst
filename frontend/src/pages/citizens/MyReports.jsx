@@ -1,4 +1,6 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import "./MyReports.css";
 import {
   FileText,
@@ -11,32 +13,22 @@ import {
 
 function MyReports() {
   const navigate = useNavigate();
-  const reports = [
-    {
-      title: "Water shortage in residential area",
-      category: "Water",
-      location: "Ranchi, Jharkhand",
-      date: "Aug 28, 2026",
-      status: "In Progress",
-      icon: AlertCircle,
-    },
-    {
-      title: "Irregular waste collection",
-      category: "Sanitation",
-      location: "Kanke, Ranchi",
-      date: "Aug 22, 2026",
-      status: "Under Review",
-      icon: Clock,
-    },
-    {
-      title: "Damaged road near main junction",
-      category: "Infrastructure",
-      location: "Dhanbad",
-      date: "Aug 15, 2026",
-      status: "Resolved",
-      icon: CheckCircle,
-    },
-  ];
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await api.get("/problems");
+        setReports(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReports();
+  }, []);
 
   return (
     <div className="my-reports-page">
@@ -100,49 +92,55 @@ function MyReports() {
 
         <div className="reports-list">
 
-          {reports.map((report, index) => {
-            const Icon = report.icon;
+          {loading ? (
+            <div style={{ padding: "2rem", textAlign: "center" }}>Loading reports...</div>
+          ) : reports.length === 0 ? (
+            <div style={{ padding: "2rem", textAlign: "center", color: "#6b7280" }}>No reports found.</div>
+          ) : (
+            reports.map((report, index) => {
+              const Icon = report.severity === "Critical" ? AlertCircle : (report.governmentStatus === "Resolved" ? CheckCircle : Clock);
 
-            return (
-              <div className="report-card" key={index}>
+              return (
+                <div className="report-card" key={report._id}>
 
-                <div className="report-icon">
-                  <Icon size={22} />
-                </div>
-
-                <div className="report-info">
-                  <h3>{report.title}</h3>
-
-                  <div className="report-meta">
-                    <span>{report.category}</span>
-
-                    <span className="location">
-                      <MapPin size={14} />
-                      {report.location}
-                    </span>
-
-                    <span>{report.date}</span>
+                  <div className="report-icon">
+                    <Icon size={22} />
                   </div>
+
+                  <div className="report-info">
+                    <h3>{report.category || 'Unassigned Problem'}</h3>
+
+                    <div className="report-meta">
+                      <span>{report.category}</span>
+
+                      <span className="location">
+                        <MapPin size={14} />
+                        {report.location?.address}
+                      </span>
+
+                      <span>{new Date(report.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+
+                  <span
+                    className={`status ${(report.governmentStatus || 'Reported')
+                      .toLowerCase()
+                      .replace(" ", "-")}`}
+                  >
+                    {report.governmentStatus || 'Reported'}
+                  </span>
+
+           <button
+    className="report-arrow"
+    onClick={() => navigate(`/citizen/reports/${report._id}`)}
+  >
+    <ArrowRight size={20} />
+  </button>
+
                 </div>
-
-                <span
-                  className={`status ${report.status
-                    .toLowerCase()
-                    .replace(" ", "-")}`}
-                >
-                  {report.status}
-                </span>
-
-         <button
-  className="report-arrow"
-  onClick={() => navigate(`/my-reports/${index + 1}`)}
->
-  <ArrowRight size={20} />
-</button>
-
-              </div>
-            );
-          })}
+              );
+            })
+          )}
 
         </div>
 

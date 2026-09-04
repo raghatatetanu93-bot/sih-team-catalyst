@@ -137,7 +137,7 @@ function IndustryDashboard() {
               <ArrowRight size={18} />
             </Link>
 
-            <Link to="/industry/partnerships" className="action-btn">
+            <Link to="/industry/support" className="action-btn">
               <span>View Partnerships</span>
               <ArrowRight size={18} />
             </Link>

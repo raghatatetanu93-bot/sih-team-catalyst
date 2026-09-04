@@ -93,7 +93,7 @@ function ProjectDetails() {
 
         <button
           className="back-button"
-          onClick={() => navigate("/projects")}
+          onClick={() => navigate("/government/projects")}
         >
           <ArrowLeft size={17} />
           Back to Projects
@@ -109,7 +109,7 @@ function ProjectDetails() {
 
       <button
         className="back-button"
-        onClick={() => navigate("/projects")}
+        onClick={() => navigate("/government/projects")}
       >
         <ArrowLeft size={17} />
         Back to Projects

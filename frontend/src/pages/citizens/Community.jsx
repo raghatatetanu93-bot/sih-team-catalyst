@@ -208,7 +208,7 @@ function Community() {
 
               <button
   className="view-community-issue"
-  onClick={() => navigate(`/community/${index + 1}`)}
+  onClick={() => navigate(`/citizen/community/${index + 1}`)}
 >
   View Issue
   <ArrowRight size={17} />

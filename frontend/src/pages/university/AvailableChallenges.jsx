@@ -1,59 +1,35 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Users, Clock } from "lucide-react";
+import api from "../../api";
 
 import "./AvailableChallenges.css";
 
-const MOCK_CHALLENGES = [
-  {
-    id: 1,
-    title: "Smart Water Grid Management",
-    category: "Water",
-    priority: "High",
-    location: "Ranchi, Jharkhand",
-    reports: 1240,
-    duration: "6 Months",
-    description: "Develop a sensor-based IoT system to detect leakages and manage water distribution efficiently in urban areas."
-  },
-  {
-    id: 2,
-    title: "Rural Education Offline Portal",
-    category: "Education",
-    priority: "Medium",
-    location: "Gumla District",
-    reports: 850,
-    duration: "4 Months",
-    description: "Create an offline-first learning platform for rural schools with limited internet connectivity."
-  },
-  {
-    id: 3,
-    title: "Traffic Congestion Prediction",
-    category: "Infrastructure",
-    priority: "High",
-    location: "Dhanbad",
-    reports: 2100,
-    duration: "8 Months",
-    description: "Use AI/ML on existing camera feeds to predict and optimize traffic light timings dynamically."
-  },
-  {
-    id: 4,
-    title: "Crop Disease Identification App",
-    category: "Agriculture",
-    priority: "Medium",
-    location: "Statewide",
-    reports: 3200,
-    duration: "5 Months",
-    description: "Develop a mobile app utilizing computer vision to identify common crop diseases from photos taken by farmers."
-  }
-];
-
 function AvailableChallenges() {
   const navigate = useNavigate();
+  const [challenges, setChallenges] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const filteredChallenges = MOCK_CHALLENGES.filter(challenge => {
-    const matchesSearch = challenge.title.toLowerCase().includes(searchTerm.toLowerCase());
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const response = await api.get("/problems?status=Validated");
+        setChallenges(response.data);
+      } catch (err) {
+        setError("Failed to load challenges.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchChallenges();
+  }, []);
+
+  const filteredChallenges = challenges.filter(challenge => {
+    const matchesSearch = challenge.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          challenge.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = categoryFilter === "All" || challenge.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
@@ -86,46 +62,53 @@ function AvailableChallenges() {
           <option value="Education">Education</option>
           <option value="Infrastructure">Infrastructure</option>
           <option value="Agriculture">Agriculture</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Waste Management">Waste Management</option>
+          <option value="Unassigned">Unassigned</option>
         </select>
       </div>
 
-      <div className="challenges-grid">
-        {filteredChallenges.map(challenge => (
-          <div key={challenge.id} className="challenge-card">
-            <div className="challenge-badge-row">
-              <span className="category-badge">{challenge.category}</span>
-              <span className={`priority-badge ${challenge.priority.toLowerCase()}`}>
-                {challenge.priority} Priority
-              </span>
+      {loading ? (
+        <div style={{ padding: "2rem", textAlign: "center" }}>Loading validated challenges...</div>
+      ) : error ? (
+        <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>{error}</div>
+      ) : filteredChallenges.length === 0 ? (
+        <div style={{ padding: "2rem", textAlign: "center", color: "#6b7280" }}>No challenges found.</div>
+      ) : (
+        <div className="challenges-grid">
+          {filteredChallenges.map(challenge => (
+            <div key={challenge._id} className="challenge-card">
+              <div className="challenge-badge-row">
+                <span className="category-badge">{challenge.category}</span>
+                <span className={`priority-badge ${(challenge.severity || 'Medium').toLowerCase()}`}>
+                  {challenge.severity || 'Medium'} Priority
+                </span>
+              </div>
+
+              <h3>{challenge.category || 'Uncategorized Issue'}</h3>
+              <p className="challenge-desc">{challenge.description}</p>
+
+              <div className="challenge-meta">
+                <div className="meta-item">
+                  <MapPin size={16} />
+                  <span>{challenge.location?.address}</span>
+                </div>
+                <div className="meta-item">
+                  <Users size={16} />
+                  <span>{challenge.affectedPopulation} Citizens Affected</span>
+                </div>
+              </div>
+
+              <button 
+                className="view-btn"
+                onClick={() => navigate(`/university/challenges/${challenge._id}`)}
+              >
+                View Details
+              </button>
             </div>
-
-            <h3>{challenge.title}</h3>
-            <p className="challenge-desc">{challenge.description}</p>
-
-            <div className="challenge-meta">
-              <div className="meta-item">
-                <MapPin size={16} />
-                <span>{challenge.location}</span>
-              </div>
-              <div className="meta-item">
-                <Users size={16} />
-                <span>{challenge.reports} Citizens Affected</span>
-              </div>
-              <div className="meta-item">
-                <Clock size={16} />
-                <span>Est. {challenge.duration}</span>
-              </div>
-            </div>
-
-            <button 
-              className="view-btn"
-              onClick={() => navigate(`/university/challenges/${challenge.id}`)}
-            >
-              View Details
-            </button>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -129,9 +129,7 @@ function CitizenDashboard() {
   className={`quick-action ${action.type}`}
   key={action.title}
   onClick={() => {
-    if (action.type === "report") {
-      navigate("/citizen/report-issue");
-    }
+    navigate(`/citizen/${action.type}`);
   }}
 >
 
@@ -204,7 +202,7 @@ function CitizenDashboard() {
 
         <div className="issue-grid">
 
-          {issues.map((issue) => {
+          {issues.map((issue, index) => {
 
             const Icon = issue.icon;
 
@@ -267,7 +265,7 @@ function CitizenDashboard() {
                   </div>
 
 
-                  <button className="issue-arrow">
+                  <button className="issue-arrow" onClick={() => navigate(`/citizen/community/${index + 1}`)}>
 
                     <ArrowRight size={21} />
 

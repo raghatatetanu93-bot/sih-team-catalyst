@@ -63,7 +63,7 @@ function ReportDetails() {
 
       <button
         className="back-button"
-        onClick={() => navigate("/my-reports")}
+        onClick={() => navigate("/citizen/reports")}
       >
         <ArrowLeft size={18} />
         Back to My Reports

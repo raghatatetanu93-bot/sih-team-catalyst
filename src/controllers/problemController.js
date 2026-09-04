@@ -39,21 +39,43 @@ const createProblem = async (req, res) => {
 
 const getProblems = async (req, res) => {
   try {
-    const problems = await Problem.find().sort({ createdAt: -1 });
+    const filter = {};
+    if (req.query.status) filter.governmentStatus = req.query.status;
+    const problems = await Problem.find(filter).sort({ createdAt: -1 });
     res.status(200).json(problems);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const updateProblemStatus = async (req, res) => {
+const getProblemById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { governmentStatus } = req.body;
+    const problem = await Problem.findById(id);
+    if (!problem) return res.status(404).json({ message: 'Problem not found' });
+    res.status(200).json(problem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateProblem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { governmentStatus, emergencyStatus } = req.body;
+    
+    // Whitelist only allowed fields to be updated
+    const updateFields = {};
+    if (governmentStatus !== undefined) updateFields.governmentStatus = governmentStatus;
+    if (emergencyStatus !== undefined) updateFields.emergencyStatus = emergencyStatus;
+
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).json({ message: 'No valid fields provided for update' });
+    }
 
     const updatedProblem = await Problem.findByIdAndUpdate(
       id,
-      { governmentStatus },
+      { $set: updateFields },
       { new: true }
     );
 
@@ -66,6 +88,7 @@ const updateProblemStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const getProblemStats = async (req, res) => {
   try {
@@ -85,4 +108,4 @@ const getProblemStats = async (req, res) => {
   }
 };
 
-module.exports = { createProblem, getProblems, updateProblemStatus, getProblemStats };
+module.exports = { createProblem, getProblems, getProblemById, updateProblem, getProblemStats };

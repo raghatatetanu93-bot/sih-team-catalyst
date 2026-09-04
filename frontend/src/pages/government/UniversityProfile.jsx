@@ -112,7 +112,7 @@ function UniversityProfile() {
 
       <button
         className="back-button"
-        onClick={() => navigate("/university-matching")}
+        onClick={() => navigate("/government/university-matching")}
       >
         <ArrowLeft size={18} />
         Back to Matching

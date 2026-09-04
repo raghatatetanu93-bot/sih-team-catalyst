@@ -28,7 +28,8 @@ const analyzeProblem = async (description) => {
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const response = await ai.models.generateContent({
+  
+  const generatePromise = ai.models.generateContent({
     model: 'gemini-3.6-flash',
     contents: `You are a strict JSON-only API. Do not use markdown formatting. Output only raw JSON.
 
@@ -48,6 +49,12 @@ Return a single JSON object with exactly these keys:
 - suggestedSolutionArea: short intervention area, e.g. "Drainage infrastructure overhaul"`,
     config: { responseMimeType: 'application/json' },
   });
+
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('AI Service Timeout')), 60000)
+  );
+
+  const response = await Promise.race([generatePromise, timeoutPromise]);
 
   const rawText = extractRawText(response);
   console.log('RAW AI TEXT:', rawText);

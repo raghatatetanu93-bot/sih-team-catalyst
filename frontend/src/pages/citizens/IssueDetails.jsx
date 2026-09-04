@@ -67,7 +67,7 @@ function IssueDetails() {
 
       <button
         className="back-button"
-        onClick={() => navigate("/community")}
+        onClick={() => navigate("/citizen/community")}
       >
         <ArrowLeft size={18} />
         Back to Community
