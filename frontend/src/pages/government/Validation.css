@@ -1,3 +1,7 @@
+/* =========================================================
+   VALIDATION CENTER
+========================================================= */
+
 .validation-page {
   min-height: 100vh;
   padding: 32px 40px 48px;
@@ -6,28 +10,40 @@
   box-sizing: border-box;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .validation-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: #3157d5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
 }
 
 .validation-header h1 {
   margin: 0;
   color: #14162b;
-  font-size: 30px;
-  font-weight: 750;
-  letter-spacing: -0.02em;
+  font-size: 31px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
 }
 
 .validation-subtitle {
   margin: 9px 0 0;
   color: #6f7889;
-  font-size: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 .validation-summary {
@@ -39,33 +55,56 @@
   border-radius: 9px;
   background: #ffffff;
   color: #267044;
-  font-size: 12px;
-  font-weight: 650;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/* STATS */
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .validation-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 13px;
+  margin-bottom: 18px;
 }
 
 .validation-stat {
   display: flex;
   align-items: center;
   gap: 13px;
-  padding: 18px;
+  min-height: 82px;
+  padding: 16px;
   border: 1px solid #e2e6ee;
-  border-radius: 13px;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 2px 5px rgba(20, 22, 43, 0.035);
+  box-shadow: 0 2px 6px rgba(20, 22, 43, 0.035);
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.validation-stat:hover {
+  transform: translateY(-1px);
+  border-color: #cfd7e6;
+  box-shadow: 0 5px 14px rgba(20, 22, 43, 0.07);
+}
+
+.validation-stat.active {
+  border-color: #3157d5;
+  box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.08);
 }
 
 .validation-stat-icon {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -97,32 +136,37 @@
   display: block;
   margin-bottom: 3px;
   color: #737d8e;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .validation-stat strong {
   color: #202536;
-  font-size: 24px;
+  font-size: 23px;
+  line-height: 1;
 }
 
-/* TOOLBAR */
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .validation-toolbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding: 11px;
+  gap: 9px;
+  margin-bottom: 18px;
+  padding: 10px;
   border: 1px solid #e2e6ee;
   border-radius: 12px;
   background: #ffffff;
 }
 
 .validation-search {
+  min-width: 230px;
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
   padding: 8px 10px;
   color: #9aa2b0;
 }
@@ -134,33 +178,77 @@
   background: transparent;
   color: #303747;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12.5px;
 }
 
 .validation-search input::placeholder {
   color: #a1a8b5;
 }
 
-.validation-toolbar > button {
-  padding: 9px 12px;
+.clear-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: #9aa2b0;
+  cursor: pointer;
+}
+
+.validation-filter {
+  height: 36px;
+  min-width: 135px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
   border: 1px solid #dfe3ec;
   border-radius: 8px;
   background: #f9fafc;
+  color: #687386;
+  box-sizing: border-box;
+}
+
+.validation-filter select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
   color: #505a6b;
   font-family: inherit;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
 }
 
-/* MAIN CARD */
+.clear-filters {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  border: 1px solid #f0dcdc;
+  border-radius: 8px;
+  background: #fffafa;
+  color: #d92d2d;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
 
 .validation-card {
   overflow: hidden;
   border: 1px solid #e2e6ee;
   border-radius: 14px;
   background: #ffffff;
-  box-shadow: 0 2px 5px rgba(20, 22, 43, 0.035);
+  box-shadow: 0 2px 6px rgba(20, 22, 43, 0.035);
 }
 
 .validation-card-header {
@@ -168,7 +256,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 21px 24px;
+  padding: 20px 23px;
   border-bottom: 1px solid #eceef3;
 }
 
@@ -176,12 +264,13 @@
   margin: 0 0 4px;
   color: #202536;
   font-size: 17px;
+  font-weight: 750;
 }
 
 .validation-card-header p {
   margin: 0;
   color: #8992a3;
-  font-size: 12.5px;
+  font-size: 11.5px;
 }
 
 .validation-card-header > span {
@@ -189,18 +278,21 @@
   border-radius: 6px;
   background: #eef2ff;
   color: #3157d5;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
 }
 
-/* VALIDATION ROW */
+
+/* =========================================================
+   ROW
+========================================================= */
 
 .validation-row {
   display: grid;
-  grid-template-columns: minmax(320px, 2fr) 130px 155px 100px;
+  grid-template-columns: minmax(300px, 2fr) 125px 145px 88px;
   align-items: center;
   gap: 18px;
-  padding: 19px 24px;
+  padding: 18px 23px;
   border-bottom: 1px solid #eef0f4;
   transition: background 0.15s ease;
 }
@@ -213,6 +305,11 @@
   border-bottom: none;
 }
 
+
+/* =========================================================
+   MAIN CASE
+========================================================= */
+
 .validation-main {
   display: flex;
   align-items: flex-start;
@@ -221,30 +318,48 @@
 }
 
 .validation-case-icon {
-  width: 40px;
-  height: 40px;
+  width: 39px;
+  height: 39px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+}
+
+.validation-case-icon.critical,
+.validation-case-icon.high {
+  background: #fde8e8;
+  color: #d92d2d;
+}
+
+.validation-case-icon.medium {
   background: #fff0dc;
   color: #d97706;
+}
+
+.validation-case-icon.low {
+  background: #e3f8ea;
+  color: #1b9e5a;
+}
+
+.validation-main-content {
+  min-width: 0;
 }
 
 .validation-title-line {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 5px;
+  gap: 7px;
+  margin-bottom: 6px;
 }
 
 .validation-title-line h3 {
   margin: 0;
   color: #303747;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13.5px;
+  font-weight: 750;
 }
 
 .validation-main p {
@@ -253,7 +368,7 @@
   gap: 5px;
   margin: 0 0 5px;
   color: #737d8e;
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .validation-main small {
@@ -261,21 +376,25 @@
   align-items: center;
   gap: 5px;
   color: #9aa2b0;
-  font-size: 10.5px;
+  font-size: 10px;
 }
 
-/* PRIORITY */
+
+/* =========================================================
+   PRIORITY
+========================================================= */
 
 .priority {
   display: inline-flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 4px 7px;
   border-radius: 5px;
-  font-size: 9.5px;
-  font-weight: 750;
+  font-size: 8.5px;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
+.priority.critical,
 .priority.high {
   background: #fde8e8;
   color: #d92d2d;
@@ -291,7 +410,10 @@
   color: #1b9e5a;
 }
 
-/* AI CONFIDENCE */
+
+/* =========================================================
+   SCORE
+========================================================= */
 
 .confidence {
   display: flex;
@@ -301,70 +423,182 @@
 
 .confidence span {
   color: #9aa2b0;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 600;
 }
 
 .confidence strong {
   color: #3157d5;
   font-size: 15px;
+  font-weight: 800;
 }
 
-/* STATUS */
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .validation-status span {
   display: inline-flex;
   align-items: center;
-  padding: 6px 9px;
+  padding: 6px 8px;
   border-radius: 6px;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 750;
   white-space: nowrap;
 }
 
-.pending-validation {
+/* Reported */
+
+.status-reported {
   background: #fff0dc;
   color: #c96a00;
 }
 
-.under-review {
+/* Pending */
+
+.status-pending-validation,
+.status-pending {
+  background: #fff0dc;
+  color: #c96a00;
+}
+
+/* Under review */
+
+.status-under-review {
   background: #e9efff;
   color: #3157d5;
 }
 
-/* REVIEW BUTTON */
+/* Validated */
+
+.status-validated {
+  background: #e3f8ea;
+  color: #1b9e5a;
+}
+
+/* Resolved */
+
+.status-resolved {
+  background: #e8f7f1;
+  color: #18794e;
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
 
 .review-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+
   padding: 8px 10px;
+
   border: 1px solid #d8deeb;
   border-radius: 7px;
+
   background: #ffffff;
   color: #3157d5;
+
   font-family: inherit;
-  font-size: 11.5px;
-  font-weight: 650;
+  font-size: 10.5px;
+  font-weight: 700;
+
   cursor: pointer;
-  transition: 0.15s ease;
+
+  transition: all 0.15s ease;
 }
 
 .review-button:hover {
   background: #eef2ff;
   border-color: #cbd5f5;
+  transform: translateY(-1px);
 }
 
-/* RESPONSIVE */
 
-@media (max-width: 1100px) {
+/* =========================================================
+   STATES
+========================================================= */
+
+.validation-state {
+  min-height: 230px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  color: #8992a3;
+  font-size: 12px;
+}
+
+.validation-state strong {
+  color: #4a5364;
+  font-size: 14px;
+}
+
+.validation-state svg {
+  color: #a5afbe;
+  margin-bottom: 4px;
+}
+
+.validation-state.error svg {
+  color: #d92d2d;
+}
+
+.validation-state button {
+  margin-top: 8px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 7px;
+  background: #3157d5;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loading-spinner {
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid #e5e9f1;
+  border-top-color: #3157d5;
+
+  border-radius: 50%;
+
+  animation: validationSpin 0.8s linear infinite;
+}
+
+@keyframes validationSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+
   .validation-stats {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .validation-row {
-    grid-template-columns: minmax(280px, 1fr) 110px 140px;
+    grid-template-columns: minmax(280px, 1fr) 110px 130px;
   }
 
   .review-button {
@@ -373,7 +607,9 @@
   }
 }
 
+
 @media (max-width: 800px) {
+
   .validation-page {
     padding: 24px 20px 40px;
   }
@@ -390,6 +626,10 @@
     flex-basis: 100%;
   }
 
+  .validation-filter {
+    flex: 1;
+  }
+
   .validation-row {
     grid-template-columns: 1fr 100px;
   }
@@ -403,7 +643,9 @@
   }
 }
 
+
 @media (max-width: 560px) {
+
   .validation-page {
     padding: 20px 14px 32px;
   }
@@ -427,7 +669,12 @@
     grid-column: auto;
   }
 
-  .validation-toolbar > button {
-    flex: 1;
+  .validation-filter {
+    width: 100%;
+  }
+
+  .clear-filters {
+    width: 100%;
+    justify-content: center;
   }
 }

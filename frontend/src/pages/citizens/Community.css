@@ -1,152 +1,1099 @@
+/* =====================================================
+   PAGE
+===================================================== */
+
 .community-page {
   width: 100%;
   min-height: 100vh;
-  padding: 40px 48px;
-  background: #f8fafc;
+
   box-sizing: border-box;
-}
 
+  padding: 34px 42px 60px;
 
-/* ================= HEADER ================= */
+  background:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(15, 118, 110, 0.055),
+      transparent 28%
+    ),
+    #f7f9fc;
 
-.community-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.page-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #0f766e;
-}
-
-.community-header h1 {
-  margin: 8px 0;
-  font-size: 36px;
   color: #172033;
 }
 
-.community-header p {
-  margin: 0;
-  max-width: 650px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #64748b;
-}
 
-.community-header-icon {
-  width: 58px;
-  height: 58px;
+/* =====================================================
+   HEADER
+===================================================== */
 
-  border-radius: 16px;
-
-  background: #e8f5f4;
-  color: #0f766e;
-
+.community-header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-
-/* ================= INTRO ================= */
-
-.community-intro {
-  background: linear-gradient(135deg, #103c42, #0f5c63);
-
-  border-radius: 22px;
-
-  padding: 32px 36px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 40px;
-
-  margin-bottom: 45px;
-}
-
-.community-intro-text {
-  max-width: 520px;
-}
-
-.community-intro-text span {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  color: #79d4ce;
-}
-
-.community-intro-text h2 {
-  margin: 10px 0;
-  font-size: 28px;
-  color: white;
-}
-
-.community-intro-text p {
-  margin: 0;
-  line-height: 1.6;
-  color: #cce8e6;
-}
-
-.community-intro-stats {
-  display: flex;
-  gap: 40px;
-}
-
-.community-intro-stats div {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.community-intro-stats strong {
-  font-size: 26px;
-  color: white;
-}
-
-.community-intro-stats span {
-  font-size: 12px;
-  color: #b9d9d7;
-}
-
-
-/* ================= SECTION HEADER ================= */
-
-.community-section-header {
-  display: flex;
   justify-content: space-between;
   align-items: flex-end;
+
+  gap: 25px;
 
   margin-bottom: 25px;
 }
 
-.section-label {
+.page-label {
+  display: inline-block;
+
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.6px;
+
+  color: #0f766e;
+
+  margin-bottom: 7px;
+}
+
+.community-header h1 {
+  margin: 0;
+
+  font-size: 36px;
+
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+
+  color: #172033;
+}
+
+.community-header p {
+  margin: 9px 0 0;
+
+  max-width: 680px;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  color: #64748b;
+}
+
+.community-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.community-header-stat {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px 14px;
+
+  background: white;
+
+  border: 1px solid #e2e8ef;
+
+  border-radius: 10px;
+
   color: #0f766e;
 }
 
+.community-header-stat div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.community-header-stat strong {
+  color: #172033;
+
+  font-size: 14px;
+}
+
+.community-header-stat span {
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   OVERVIEW
+===================================================== */
+
+.community-overview {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding: 22px 26px;
+
+  margin-bottom: 20px;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #103f44,
+      #116c70 60%,
+      #175c78
+    );
+
+  color: white;
+
+  box-shadow:
+    0 10px 26px
+    rgba(15, 118, 110, 0.13);
+}
+
+.overview-main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.overview-icon {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    rgba(255,255,255,0.13);
+}
+
+.overview-main span {
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  color: #82d6d0;
+}
+
+.overview-main h2 {
+  margin: 4px 0;
+
+  font-size: 19px;
+}
+
+.overview-main p {
+  margin: 0;
+
+  max-width: 540px;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  color: #c5e6e4;
+}
+
+.overview-stats {
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+}
+
+.overview-stats div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  text-align: right;
+}
+
+.overview-stats strong {
+  font-size: 21px;
+}
+
+.overview-stats span {
+  font-size: 9px;
+
+  color: #b9d9d7;
+}
+
+
+/* =====================================================
+   INTELLIGENCE SECTION
+===================================================== */
+
+.community-intelligence {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.7fr)
+    minmax(300px, 0.8fr);
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+.community-map-section {
+  padding: 22px;
+
+  background: white;
+
+  border: 1px solid #e4eaf0;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(15,23,42,0.025);
+}
+
+.map-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-bottom: 16px;
+}
+
+.section-label {
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+
+  color: #0f766e;
+}
+
+.map-header h2 {
+  margin: 6px 0 0;
+
+  font-size: 20px;
+
+  letter-spacing: -0.3px;
+}
+
+.map-legend {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding-top: 4px;
+}
+
+.map-legend span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+.legend {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+}
+
+.legend.critical {
+  background: #ef4444;
+}
+
+.legend.high {
+  background: #f97316;
+}
+
+.legend.medium {
+  background: #eab308;
+}
+
+
+/* =====================================================
+   MAP VISUAL
+===================================================== */
+
+.community-map {
+  position: relative;
+
+  height: 365px;
+
+  overflow: hidden;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e8f1ed,
+      #e1ece8
+    );
+
+  border: 1px solid #d9e4df;
+}
+
+
+/* GRID */
+
+.map-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.45;
+
+  background-image:
+    linear-gradient(
+      rgba(100,130,120,0.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(100,130,120,0.12) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    35px 35px;
+}
+
+
+/* ROADS */
+
+.map-road {
+  position: absolute;
+
+  background:
+    rgba(255,255,255,0.8);
+
+  border: 3px solid
+    rgba(199,214,207,0.65);
+
+  box-shadow:
+    0 0 0 1px
+    rgba(255,255,255,0.3);
+}
+
+.road-1 {
+  width: 115%;
+
+  height: 27px;
+
+  left: -8%;
+
+  top: 37%;
+
+  transform:
+    rotate(-12deg);
+}
+
+.road-2 {
+  width: 105%;
+
+  height: 19px;
+
+  left: -2%;
+
+  top: 69%;
+
+  transform:
+    rotate(9deg);
+}
+
+.road-3 {
+  width: 20px;
+
+  height: 115%;
+
+  left: 37%;
+
+  top: -8%;
+
+  transform:
+    rotate(17deg);
+}
+
+.road-4 {
+  width: 17px;
+
+  height: 110%;
+
+  left: 68%;
+
+  top: -5%;
+
+  transform:
+    rotate(-21deg);
+}
+
+.road-5 {
+  width: 80%;
+
+  height: 13px;
+
+  left: 13%;
+
+  top: 51%;
+
+  transform:
+    rotate(38deg);
+}
+
+
+/* MAP AREAS */
+
+.map-area {
+  position: absolute;
+
+  color: #8da29b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  opacity: 0.7;
+}
+
+.area-1 {
+  left: 20%;
+  top: 17%;
+}
+
+.area-2 {
+  left: 70%;
+  top: 16%;
+}
+
+.area-3 {
+  left: 76%;
+  top: 70%;
+}
+
+.area-4 {
+  left: 27%;
+  top: 76%;
+}
+
+
+/* =====================================================
+   MARKERS
+===================================================== */
+
+.map-marker {
+  position: absolute;
+
+  width: 35px;
+  height: 35px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  z-index: 5;
+
+  transition: 0.2s ease;
+}
+
+.map-marker span {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: white;
+
+  border: 3px solid white;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15,23,42,0.18);
+}
+
+.map-marker.critical {
+  background:
+    rgba(239,68,68,0.2);
+}
+
+.map-marker.critical span {
+  background: #ef4444;
+}
+
+.map-marker.high {
+  background:
+    rgba(249,115,22,0.2);
+}
+
+.map-marker.high span {
+  background: #f97316;
+}
+
+.map-marker.medium {
+  background:
+    rgba(234,179,8,0.22);
+}
+
+.map-marker.medium span {
+  background: #eab308;
+}
+
+.map-marker:hover {
+  transform:
+    translate(-50%, -50%)
+    scale(1.15);
+}
+
+.map-marker.selected {
+  transform:
+    translate(-50%, -50%)
+    scale(1.25);
+}
+
+
+/* =====================================================
+   MAP POPUP
+===================================================== */
+
+.map-popup {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 20px;
+
+  bottom: 20px;
+
+  width: 270px;
+
+  display: flex;
+
+  gap: 11px;
+
+  padding: 13px;
+
+  background: white;
+
+  border-radius: 11px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(15,23,42,0.18);
+}
+
+.popup-close {
+  position: absolute;
+
+  top: 7px;
+
+  right: 7px;
+
+  border: none;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  border-radius: 5px;
+
+  width: 22px;
+  height: 22px;
+
+  cursor: pointer;
+}
+
+.popup-icon {
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #e8f5f4;
+
+  color: #0f766e;
+}
+
+.map-popup span {
+  font-size: 9px;
+
+  color: #0f766e;
+
+  font-weight: 700;
+}
+
+.map-popup h3 {
+  margin: 3px 20px 4px 0;
+
+  font-size: 12px;
+
+  color: #172033;
+}
+
+.map-popup p {
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  margin: 0;
+
+  font-size: 9px;
+
+  color: #64748b;
+}
+
+
+/* =====================================================
+   MAP CONTROLS
+===================================================== */
+
+.map-controls {
+  position: absolute;
+
+  right: 14px;
+  top: 14px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  z-index: 10;
+}
+
+.map-controls button {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+
+  background: white;
+
+  color: #475569;
+
+  font-size: 17px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 2px 7px
+    rgba(15,23,42,0.12);
+}
+
+.map-controls button:first-child {
+  border-radius: 7px 7px 0 0;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.map-controls button:last-child {
+  border-radius: 0 0 7px 7px;
+}
+
+.map-location-button {
+  position: absolute;
+
+  right: 14px;
+  bottom: 52px;
+
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #0f766e;
+
+  box-shadow:
+    0 2px 7px
+    rgba(15,23,42,0.12);
+}
+
+.map-label {
+  position: absolute;
+
+  left: 14px;
+  top: 14px;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.9);
+
+  color: #475569;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 2px 8px
+    rgba(15,23,42,0.08);
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(34,197,94,0.13);
+}
+
+
+/* =====================================================
+   TRENDING PANEL
+===================================================== */
+
+.trending-panel {
+  padding: 22px;
+
+  background: white;
+
+  border: 1px solid #e4eaf0;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(15,23,42,0.025);
+}
+
+.trending-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+}
+
+.trending-header h2 {
+  margin: 6px 0 0;
+
+  font-size: 20px;
+}
+
+.flame-icon {
+  color: #f97316;
+
+  fill: #fff1e8;
+}
+
+.trending-description {
+  margin: 9px 0 18px;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* TRENDING ITEM */
+
+.trending-list {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.trending-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid #edf1f4;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.trending-item:hover {
+  transform:
+    translateX(3px);
+}
+
+.trending-rank {
+  width: 22px;
+
+  color: #a1acb8;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.trending-icon {
+  width: 36px;
+  height: 36px;
+
+  min-width: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+}
+
+.trending-icon.water {
+  background: #e6f5f7;
+  color: #247a85;
+}
+
+.trending-icon.sanitation {
+  background: #edf7ed;
+  color: #3d8a50;
+}
+
+.trending-icon.infrastructure {
+  background: #fff3e3;
+  color: #c57a19;
+}
+
+.trending-icon.electricity {
+  background: #fff7df;
+  color: #a16207;
+}
+
+.trending-icon.healthcare {
+  background: #feecec;
+  color: #dc2626;
+}
+
+.trending-icon.education {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.trending-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.trending-info h3 {
+  margin: 0 0 4px;
+
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.trending-info span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+.trending-arrow {
+  color: #a1acb8;
+}
+
+
+/* PULSE */
+
+.community-pulse {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  margin-top: 17px;
+
+  border-radius: 10px;
+
+  background: #f1faf9;
+
+  border: 1px solid #dff0ee;
+}
+
+.pulse-icon {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  color: #0f766e;
+
+  background: white;
+}
+
+.community-pulse div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.community-pulse strong {
+  color: #17645f;
+
+  font-size: 10px;
+}
+
+.community-pulse span {
+  color: #6b8b88;
+
+  font-size: 8px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   DISCOVER ISSUES
+===================================================== */
+
+.community-issues-section {
+  margin-top: 5px;
+}
+
+.community-section-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  gap: 20px;
+
+  margin-bottom: 18px;
+}
+
 .community-section-header h2 {
-  margin: 7px 0;
-  font-size: 28px;
+  margin: 6px 0;
+
+  font-size: 23px;
+
   color: #172033;
 }
 
 .community-section-header p {
   margin: 0;
+
   color: #64748b;
+
+  font-size: 12px;
 }
 
 .community-filter {
-  padding: 11px 18px;
+  display: flex;
 
-  border-radius: 10px;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border-radius: 9px;
 
   border: 1px solid #dce5ea;
 
@@ -154,45 +1101,213 @@
 
   color: #334155;
 
-  font-size: 14px;
+  font-size: 11px;
+
+  font-weight: 700;
 
   cursor: pointer;
 }
 
+.community-filter.active {
+  color: #0f766e;
 
-/* ================= ISSUE GRID ================= */
+  border-color: #a8d1ce;
+
+  background: #f1faf9;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.community-search {
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 13px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #e1e7ed;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #94a3b8;
+}
+
+.community-search:focus-within {
+  border-color: #78bdb8;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15,118,110,0.06);
+}
+
+.community-search input {
+  flex: 1;
+
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 12px;
+
+  color: #1e293b;
+}
+
+.community-search input::placeholder {
+  color: #9aa7b7;
+}
+
+
+/* =====================================================
+   FILTER PANEL
+===================================================== */
+
+.community-filter-panel {
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 20px;
+
+  padding: 14px;
+
+  margin-bottom: 17px;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e7edf2;
+}
+
+.community-filter-panel label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+.category-pills {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.category-pills button {
+  border: 1px solid #dce3ea;
+
+  background: white;
+
+  color: #475569;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.category-pills button.selected {
+  color: white;
+
+  background: #0f766e;
+
+  border-color: #0f766e;
+}
+
+.clear-community {
+  border: none;
+
+  background: transparent;
+
+  color: #0f766e;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  padding-bottom: 6px;
+}
+
+
+/* =====================================================
+   ISSUE GRID
+===================================================== */
 
 .community-issues-grid {
   display: grid;
 
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
-  gap: 22px;
+  gap: 17px;
 }
 
 
-/* ================= ISSUE CARD ================= */
+/* =====================================================
+   ISSUE CARD
+===================================================== */
 
 .community-issue-card {
+  padding: 20px;
+
   background: white;
 
-  border: 1px solid #e7edf1;
+  border: 1px solid #e4eaf0;
 
-  border-radius: 18px;
+  border-radius: 15px;
 
-  padding: 24px;
-
-  transition: 0.25s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .community-issue-card:hover {
-  transform: translateY(-4px);
+  transform:
+    translateY(-3px);
 
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  box-shadow:
+    0 10px 25px
+    rgba(15,23,42,0.07);
+
+  border-color: #b8d8d5;
 }
 
 
-/* TOP */
+/* =====================================================
+   CARD TOP
+===================================================== */
 
 .community-card-top {
   display: flex;
@@ -201,22 +1316,23 @@
 
   align-items: center;
 
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .community-issue-icon {
-  width: 48px;
-  height: 48px;
-
-  border-radius: 14px;
+  width: 46px;
+  height: 46px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  border-radius: 12px;
 }
 
 
-/* CATEGORY COLORS */
+/* COLORS */
 
 .water .community-issue-icon {
   background: #e6f5f7;
@@ -233,64 +1349,169 @@
   color: #c57a19;
 }
 
+.electricity .community-issue-icon {
+  background: #fff7df;
+  color: #a16207;
+}
+
+.healthcare .community-issue-icon {
+  background: #feecec;
+  color: #dc2626;
+}
+
+.education .community-issue-icon {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
 .community-category {
-  padding: 8px 13px;
+  padding: 6px 9px;
 
   border-radius: 20px;
 
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 10px;
+
+  font-weight: 700;
 
   background: #f3f6f7;
+
   color: #475569;
 }
 
 
-/* TITLE */
+/* =====================================================
+   TITLE
+===================================================== */
 
 .community-issue-card h3 {
-  margin: 0 0 15px;
+  min-height: 48px;
 
-  font-size: 18px;
+  margin: 0 0 10px;
+
+  font-size: 16px;
+
   line-height: 1.45;
 
   color: #1e293b;
 }
 
 
-/* LOCATION */
+/* =====================================================
+   SEVERITY + STATUS
+===================================================== */
 
-.community-location {
+.issue-severity-row {
   display: flex;
+
   align-items: center;
 
   gap: 7px;
 
-  color: #64748b;
+  margin-bottom: 11px;
+}
 
-  font-size: 13px;
+.issue-severity,
+.issue-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  font-size: 9px;
+
+  font-weight: 750;
+}
+
+.issue-severity.critical {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.issue-severity.high {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.issue-severity.medium {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+.issue-severity.low {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.issue-status {
+  background: #eaf1ff;
+
+  color: #2563eb;
+}
+
+.issue-status.resolved {
+  background: #e7f8ef;
+
+  color: #15803d;
+}
+
+.issue-status.reported {
+  background: #f1f5f9;
+
+  color: #475569;
+}
+
+.issue-status.under-review {
+  background: #fff7df;
+
+  color: #a16207;
 }
 
 
-/* DIVIDER */
+/* =====================================================
+   LOCATION
+===================================================== */
+
+.community-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
 
 .community-divider {
   height: 1px;
 
   background: #edf0f2;
 
-  margin: 20px 0;
+  margin: 16px 0;
 }
 
 
-/* ENGAGEMENT */
+/* =====================================================
+   ENGAGEMENT
+===================================================== */
 
 .community-engagement {
   display: flex;
 
   gap: 18px;
 
-  margin-bottom: 22px;
+  margin-bottom: 13px;
 }
 
 .engagement-item {
@@ -298,30 +1519,73 @@
 
   align-items: center;
 
-  gap: 6px;
+  gap: 5px;
 
-  font-size: 12px;
+  font-size: 10px;
 
   color: #64748b;
 }
 
 
-/* BUTTON */
+/* =====================================================
+   AFFECTED
+===================================================== */
+
+.affected-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 14px;
+
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+.affected-row strong {
+  color: #334155;
+}
+
+.affected-avatar {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eef8f7;
+
+  color: #0f766e;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
 
 .view-community-issue {
   width: 100%;
 
-  padding: 11px;
+  padding: 10px;
 
   border: none;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   background: #edf7f6;
 
   color: #0f766e;
 
-  font-weight: 600;
+  font-size: 11px;
+
+  font-weight: 700;
 
   display: flex;
 
@@ -338,46 +1602,684 @@
 
 .view-community-issue:hover {
   background: #0f766e;
+
   color: white;
 }
 
 
-/* ================= RESPONSIVE ================= */
+/* =====================================================
+   EMPTY
+===================================================== */
 
-@media (max-width: 1100px) {
+.community-empty {
+  padding: 60px 20px;
 
-  .community-issues-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  text-align: center;
 
-  .community-intro {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
+  color: #94a3b8;
 }
 
-@media (max-width: 700px) {
+.community-empty h3 {
+  margin: 12px 0 5px;
+
+  color: #1e293b;
+
+  font-size: 17px;
+}
+
+.community-empty p {
+  margin: 0 0 15px;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.community-empty button {
+  border: none;
+
+  background: #0f766e;
+
+  color: white;
+
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   BOTTOM CTA
+===================================================== */
+
+.community-cta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 28px;
+
+  padding: 20px 23px;
+
+  border-radius: 15px;
+
+  background: #eef8f7;
+
+  border: 1px solid #d7eeeb;
+}
+
+.cta-icon {
+  width: 43px;
+  height: 43px;
+
+  min-width: 43px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: white;
+
+  color: #0f766e;
+}
+
+.community-cta div:nth-child(2) {
+  flex: 1;
+}
+
+.community-cta span {
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #0f766e;
+}
+
+.community-cta h2 {
+  margin: 4px 0 0;
+
+  font-size: 15px;
+
+  color: #17403e;
+}
+
+.community-cta button {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  padding: 10px 14px;
+
+  background: #0f766e;
+
+  color: white;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .community-intelligence {
+    grid-template-columns: 1fr;
+  }
+
+  .trending-panel {
+    display: block;
+  }
+
+  .trending-list {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 10px;
+  }
+
+  .trending-item {
+    padding: 10px;
+
+    border: 1px solid #edf1f4;
+
+    border-radius: 9px;
+  }
+
+  .community-issues-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 850px) {
 
   .community-page {
-    padding: 25px 20px;
+    padding: 28px 22px 50px;
   }
 
   .community-header {
     align-items: flex-start;
+
+    flex-direction: column;
   }
 
-  .community-header-icon {
-    display: none;
+  .community-overview {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .overview-stats {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .overview-stats div {
+    text-align: left;
   }
 
   .community-issues-grid {
     grid-template-columns: 1fr;
   }
 
-  .community-intro-stats {
-    flex-wrap: wrap;
-    gap: 25px;
+  .trending-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .community-page {
+    padding: 24px 15px 40px;
   }
 
+  .community-header h1 {
+    font-size: 30px;
+  }
+
+  .community-header-stat {
+    width: 100%;
+  }
+
+  .community-overview {
+    padding: 19px;
+  }
+
+  .overview-stats {
+    flex-wrap: wrap;
+
+    gap: 18px;
+  }
+
+  .map-header {
+    flex-direction: column;
+  }
+
+  .map-legend {
+    padding: 0;
+  }
+
+  .community-map {
+    height: 310px;
+  }
+
+  .community-section-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .community-filter {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .community-cta {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .community-cta button {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 430px) {
+
+  .community-intelligence {
+    gap: 13px;
+  }
+
+  .community-map-section,
+  .trending-panel {
+    padding: 17px;
+  }
+
+  .community-map {
+    height: 280px;
+  }
+
+  .map-popup {
+    width: 220px;
+  }
+
+  .community-issue-card {
+    padding: 17px;
+  }
+}
+/* =====================================================
+   FINAL UI OVERRIDES
+   Bigger + darker + more readable
+===================================================== */
+
+
+/* ================================
+   MAIN HEADINGS
+================================ */
+
+.community-header h1 {
+  font-size: 40px !important;
+  color: #142033 !important;
+  font-weight: 750 !important;
+}
+
+.community-header p {
+  font-size: 16px !important;
+  color: #64748b !important;
+}
+
+
+/* ================================
+   OVERVIEW BANNER
+================================ */
+
+.overview-main h2 {
+  font-size: 23px !important;
+  color: #ffffff !important;
+  font-weight: 750 !important;
+}
+
+.overview-main p {
+  font-size: 13px !important;
+  color: #d2ece9 !important;
+}
+
+.overview-main span {
+  font-size: 10px !important;
+}
+
+.overview-stats strong {
+  font-size: 25px !important;
+  color: #ffffff !important;
+}
+
+.overview-stats span {
+  font-size: 11px !important;
+  color: #c6e2df !important;
+}
+
+
+/* =====================================================
+   MAP SECTION
+===================================================== */
+
+/*
+   IMPORTANT:
+   These !important rules fix the white heading
+   visible in your screenshot.
+*/
+
+.community-map-section .map-header h2 {
+  color: #172033 !important;
+
+  font-size: 24px !important;
+
+  font-weight: 750 !important;
+
+  line-height: 1.25 !important;
+
+  margin: 7px 0 0 !important;
+}
+
+.community-map-section .section-label {
+  font-size: 11px !important;
+
+  color: #0f766e !important;
+
+  font-weight: 800 !important;
+}
+
+
+/* Map legend */
+
+.map-legend span {
+  color: #64748b !important;
+
+  font-size: 11px !important;
+}
+
+
+/* Map active issue label */
+
+.map-label {
+  font-size: 11px !important;
+
+  color: #334155 !important;
+}
+
+
+/* Map area names */
+
+.map-area {
+  font-size: 11px !important;
+
+  color: #718b84 !important;
+}
+
+
+/* =====================================================
+   TRENDING ISSUES
+===================================================== */
+
+.trending-panel .trending-header h2 {
+  color: #172033 !important;
+
+  font-size: 24px !important;
+
+  font-weight: 750 !important;
+
+  line-height: 1.25 !important;
+}
+
+.trending-description {
+  color: #64748b !important;
+
+  font-size: 13px !important;
+
+  line-height: 1.5 !important;
+}
+
+.trending-info h3 {
+  color: #172033 !important;
+
+  font-size: 13px !important;
+
+  font-weight: 700 !important;
+
+  line-height: 1.4 !important;
+
+  white-space: normal !important;
+}
+
+.trending-info span {
+  color: #718096 !important;
+
+  font-size: 10px !important;
+}
+
+.trending-rank {
+  font-size: 11px !important;
+
+  color: #94a3b8 !important;
+}
+
+
+/* =====================================================
+   DISCOVER SECTION
+===================================================== */
+
+.community-section-header h2 {
+  color: #172033 !important;
+
+  font-size: 27px !important;
+
+  font-weight: 750 !important;
+
+  line-height: 1.25 !important;
+}
+
+.community-section-header p {
+  color: #64748b !important;
+
+  font-size: 14px !important;
+}
+
+.community-section-header .section-label {
+  font-size: 11px !important;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.community-search {
+  height: 52px !important;
+}
+
+.community-search input {
+  font-size: 14px !important;
+
+  color: #1e293b !important;
+}
+
+.community-search input::placeholder {
+  font-size: 14px !important;
+
+  color: #94a3b8 !important;
+}
+
+
+/* =====================================================
+   FILTER BUTTON
+===================================================== */
+
+.community-filter {
+  font-size: 13px !important;
+
+  padding: 11px 15px !important;
+}
+
+
+/* =====================================================
+   ISSUE CARDS
+===================================================== */
+
+.community-issue-card {
+  padding: 23px !important;
+}
+
+.community-issue-card h3 {
+  color: #172033 !important;
+
+  font-size: 19px !important;
+
+  font-weight: 750 !important;
+
+  line-height: 1.45 !important;
+
+  min-height: 55px !important;
+}
+
+
+/* Category */
+
+.community-category {
+  font-size: 12px !important;
+
+  padding: 7px 11px !important;
+}
+
+
+/* Location */
+
+.community-location {
+  font-size: 13px !important;
+
+  color: #64748b !important;
+}
+
+
+/* =====================================================
+   SEVERITY + STATUS
+===================================================== */
+
+.issue-severity,
+.issue-status {
+  font-size: 11px !important;
+
+  padding: 6px 9px !important;
+}
+
+
+/* =====================================================
+   ENGAGEMENT
+===================================================== */
+
+.engagement-item {
+  font-size: 12px !important;
+
+  color: #64748b !important;
+}
+
+.community-engagement {
+  gap: 22px !important;
+}
+
+
+/* =====================================================
+   AFFECTED CITIZENS
+===================================================== */
+
+.affected-row {
+  font-size: 11px !important;
+
+  color: #64748b !important;
+}
+
+.affected-row strong {
+  font-size: 12px !important;
+
+  color: #334155 !important;
+}
+
+
+/* =====================================================
+   VIEW ISSUE BUTTON
+===================================================== */
+
+.view-community-issue {
+  padding: 12px !important;
+
+  font-size: 13px !important;
+
+  font-weight: 750 !important;
+}
+
+
+/* =====================================================
+   MAP POPUP
+===================================================== */
+
+.map-popup h3 {
+  color: #172033 !important;
+
+  font-size: 13px !important;
+}
+
+.map-popup span {
+  font-size: 10px !important;
+
+  color: #0f766e !important;
+}
+
+.map-popup p {
+  font-size: 10px !important;
+
+  color: #64748b !important;
+}
+
+
+/* =====================================================
+   COMMUNITY CTA
+===================================================== */
+
+.community-cta span {
+  font-size: 10px !important;
+}
+
+.community-cta h2 {
+  font-size: 18px !important;
+
+  color: #17403e !important;
+}
+
+.community-cta button {
+  font-size: 13px !important;
+
+  padding: 11px 16px !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .community-header h1 {
+    font-size: 34px !important;
+  }
+
+  .community-header p {
+    font-size: 14px !important;
+  }
+
+  .community-map-section .map-header h2,
+  .trending-panel .trending-header h2 {
+    font-size: 21px !important;
+  }
+
+  .community-section-header h2 {
+    font-size: 23px !important;
+  }
+
+  .community-issue-card h3 {
+    font-size: 17px !important;
+  }
 }

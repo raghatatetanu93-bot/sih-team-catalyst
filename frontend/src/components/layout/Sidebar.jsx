@@ -10,7 +10,8 @@ import {
   BarChart3,
   Brain,
   FilePlus,
-  Users
+  Users,
+  Siren
 } from "lucide-react";
 
 import "./Sidebar.css";
@@ -18,12 +19,13 @@ import "./Sidebar.css";
 function Sidebar({ role = "government" }) {
   const navigate = useNavigate();
 
-  const citizenItems = [
-    { label: "Dashboard", icon: LayoutDashboard, path: "/citizen" },
-    { label: "Report Issue", icon: FilePlus, path: "/citizen/report" },
-    { label: "My Reports", icon: AlertTriangle, path: "/citizen/reports" },
-    { label: "Community", icon: Users, path: "/citizen/community" },
-  ];
+const citizenItems = [
+  { label: "Dashboard", icon: LayoutDashboard, path: "/citizen" },
+  { label: "Report Issue", icon: FilePlus, path: "/citizen/report" },
+  { label: "My Reports", icon: AlertTriangle, path: "/citizen/reports" },
+  { label: "Emergency", icon: Siren, path: "/citizen/emergency" },
+  { label: "Community", icon: Users, path: "/citizen/community" },
+];
 
   const governmentItems = [
     { label: "Dashboard", icon: LayoutDashboard, path: "/government" },
@@ -74,11 +76,13 @@ function Sidebar({ role = "government" }) {
         {items.map((item) => {
           const Icon = item.icon;
           return (
-            <button
-              className="sidebar-item"
-              key={item.label}
-              onClick={() => navigate(item.path)}
-            >
+           <button
+  className={`sidebar-item ${
+    window.location.pathname === item.path ? "active" : ""
+  }`}
+  key={item.label}
+  onClick={() => navigate(item.path)}
+>
               <Icon size={19} />
               <span>{item.label}</span>
             </button>
