@@ -413,6 +413,23 @@
   font-weight: 450;
 }
 
+.location-content select {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #17324e;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.location-content select:invalid {
+  color: #a1afbd;
+}
+
 .location-button {
   display: flex;
   align-items: center;

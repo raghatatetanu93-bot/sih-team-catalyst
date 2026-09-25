@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Users,
@@ -13,10 +13,11 @@ import {
   X,
   Target,
 } from "lucide-react";
+import api from "../../api";
 
 import "./UniversityProjects.css";
 
-const MOCK_PROJECTS = [
+const DEFAULT_UNIVERSITY_PROJECTS = [
   {
     id: 1,
     title: "Smart Water Grid IoT Prototype",
@@ -68,13 +69,55 @@ const MOCK_PROJECTS = [
 ];
 
 function UniversityProjects() {
+  const [projectsList, setProjectsList] = useState(DEFAULT_UNIVERSITY_PROJECTS);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get("/projects");
+        if (res.data && res.data.length > 0) {
+          const mapped = res.data.map((p) => ({
+            id: p._id,
+            _id: p._id,
+            title: p.title || "Innovation Solution Proposal",
+            challenge:
+              p.problemId?.title ||
+              p.problemId?.category ||
+              "Societal Solution Challenge",
+            category: p.problemId?.category || "Infrastructure",
+            status:
+              p.status === "Submitted"
+                ? "Development"
+                : p.status || "Development",
+            progress: 50,
+            lead: p.facultyMentor || "Faculty Mentor",
+            team: p.studentTeam?.length || 4,
+            startDate: new Date(p.createdAt || Date.now()).toLocaleDateString(),
+            endDate: "Ongoing",
+            impact: p.problemId?.affectedPopulation
+              ? `${Number(p.problemId.affectedPopulation).toLocaleString()}+ citizens`
+              : "10,000+ citizens",
+            description:
+              p.proposalDescription ||
+              p.problemId?.description ||
+              "Ongoing university-led technical development.",
+            nextMilestone: "Prototype Validation",
+          }));
+          setProjectsList(mapped);
+        }
+      } catch (err) {
+        console.warn("Could not fetch remote projects, using fallback:", err);
+      }
+    };
+    fetchProjects();
+  }, []);
+
   const filteredProjects = useMemo(() => {
-    return MOCK_PROJECTS.filter((project) => {
+    return projectsList.filter((project) => {
       const search = searchTerm.toLowerCase();
 
       const matchesSearch =
@@ -90,21 +133,21 @@ function UniversityProjects() {
 
       return matchesSearch && matchesStatus && matchesCategory;
     });
-  }, [searchTerm, statusFilter, categoryFilter]);
+  }, [projectsList, searchTerm, statusFilter, categoryFilter]);
 
-  const totalProjects = MOCK_PROJECTS.length;
+  const totalProjects = projectsList.length;
 
-  const activeProjects = MOCK_PROJECTS.filter(
+  const activeProjects = projectsList.filter(
     (project) => project.status !== "Completed"
   ).length;
 
-  const testingProjects = MOCK_PROJECTS.filter(
+  const testingProjects = projectsList.filter(
     (project) => project.status === "Testing"
   ).length;
 
   const averageProgress = Math.round(
-    MOCK_PROJECTS.reduce((sum, project) => sum + project.progress, 0) /
-      MOCK_PROJECTS.length
+    projectsList.reduce((sum, project) => sum + (project.progress || 0), 0) /
+      (projectsList.length || 1)
   );
 
   const clearFilters = () => {
@@ -115,7 +158,6 @@ function UniversityProjects() {
 
   return (
     <div className="projects-container">
-
       {/* HEADER */}
       <div className="projects-header">
         <div>
@@ -135,7 +177,6 @@ function UniversityProjects() {
 
       {/* STATS */}
       <div className="project-stats">
-
         <div className="project-stat-card">
           <div className="project-stat-icon blue">
             <FolderKanban size={21} />
@@ -175,12 +216,10 @@ function UniversityProjects() {
             <strong>{averageProgress}%</strong>
           </div>
         </div>
-
       </div>
 
       {/* TOOLBAR */}
       <div className="projects-toolbar">
-
         <div className="project-search">
           <Search size={18} />
           <input
@@ -223,7 +262,6 @@ function UniversityProjects() {
             Clear
           </button>
         )}
-
       </div>
 
       {/* RESULT INFO */}
@@ -251,19 +289,14 @@ function UniversityProjects() {
         </div>
       ) : (
         <div className="projects-grid">
-
           {filteredProjects.map((project) => (
-
             <div
               key={project.id}
               className="project-card"
             >
-
               {/* CARD TOP */}
               <div className="project-card-header">
-
                 <div className="project-card-title">
-
                   <div className="project-category-row">
                     <span className="project-category">
                       {project.category}
@@ -282,14 +315,11 @@ function UniversityProjects() {
                     <Flag size={14} />
                     {project.challenge}
                   </p>
-
                 </div>
-
               </div>
 
               {/* PROGRESS */}
               <div className="project-progress">
-
                 <div className="progress-header">
                   <span>Project Progress</span>
                   <strong>{project.progress}%</strong>
@@ -315,12 +345,10 @@ function UniversityProjects() {
 
                   <span>{project.nextMilestone}</span>
                 </div>
-
               </div>
 
               {/* META */}
               <div className="project-meta">
-
                 <div className="meta-row">
                   <Users size={16} />
                   <span>
@@ -341,12 +369,10 @@ function UniversityProjects() {
                     {project.startDate} — {project.endDate}
                   </span>
                 </div>
-
               </div>
 
               {/* FOOTER */}
               <div className="project-card-footer">
-
                 <div>
                   <span>Expected Impact</span>
                   <strong>{project.impact}</strong>
@@ -359,13 +385,9 @@ function UniversityProjects() {
                   Details
                   <ArrowRight size={15} />
                 </button>
-
               </div>
-
             </div>
-
           ))}
-
         </div>
       )}
 
@@ -379,7 +401,6 @@ function UniversityProjects() {
             className="project-modal"
             onClick={(e) => e.stopPropagation()}
           >
-
             <button
               className="modal-close"
               onClick={() => setSelectedProject(null)}
@@ -398,7 +419,6 @@ function UniversityProjects() {
             </p>
 
             <div className="modal-progress-box">
-
               <div className="modal-progress-top">
                 <span>Overall Progress</span>
                 <strong>
@@ -413,7 +433,6 @@ function UniversityProjects() {
                   }}
                 ></div>
               </div>
-
             </div>
 
             <p className="modal-description">
@@ -421,7 +440,6 @@ function UniversityProjects() {
             </p>
 
             <div className="modal-details-grid">
-
               <div>
                 <span>Project Lead</span>
                 <strong>{selectedProject.lead}</strong>
@@ -451,7 +469,6 @@ function UniversityProjects() {
                 <span>Next Milestone</span>
                 <strong>{selectedProject.nextMilestone}</strong>
               </div>
-
             </div>
 
             <Link
@@ -461,11 +478,9 @@ function UniversityProjects() {
               Open Collaboration Space
               <ArrowRight size={17} />
             </Link>
-
           </div>
         </div>
       )}
-
     </div>
   );
 }

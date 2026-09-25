@@ -20,4 +20,19 @@ const protect = (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+const authorize = (...roles) => {
+  const allowed = roles.map((r) => r.toLowerCase());
+  return (req, res, next) => {
+    if (!req.user || !req.user.role) {
+      return res.status(403).json({ message: 'Forbidden: No role assigned' });
+    }
+    if (!allowed.includes(req.user.role.toLowerCase())) {
+      return res.status(403).json({
+        message: `Forbidden: Role '${req.user.role}' is not authorized to access this resource`,
+      });
+    }
+    next();
+  };
+};
+
+module.exports = { protect, authorize };

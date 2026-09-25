@@ -1,7 +1,12 @@
 const University = require('../models/University');
 
 async function assignUniversityToProblem(problem) {
-  if (!problem.category || !problem.location || !problem.location.district) return;
+  if (!problem.category || !problem.location || !problem.location.district) {
+    if (process.env.DEBUG) console.log(`[matchingService] Early exit: district="${problem?.location?.district}", category="${problem?.category}"`);
+    return;
+  }
+
+  if (process.env.DEBUG) console.log(`[matchingService] Matching university for problem ${problem._id}: District="${problem.location.district}", Category="${problem.category}"`);
 
   try {
     let matchedUniversity = await University.findOne({

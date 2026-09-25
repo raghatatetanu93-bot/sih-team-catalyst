@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -15,11 +15,12 @@ import {
   ArrowUpRight,
   X,
 } from "lucide-react";
+import api from "../../api";
 
 import "./IndustryProjectDetails.css";
 
-const MOCK_PROJECT = {
-  id: 1,
+const DEFAULT_PROJECT_INFO = {
+  id: "PROJ-101",
   title: "Smart Water Grid Prototype",
   category: "Water Management",
   stage: "Prototype",
@@ -31,17 +32,14 @@ const MOCK_PROJECT = {
   budgetReq: "₹15 Lakhs",
   progress: 45,
   matchScore: 94,
-
   description:
     "The city of Ranchi has been experiencing severe water distribution inequalities and frequent pipeline leakages. BIT Mesra has developed a successful lab prototype of a sensor-based IoT system to detect leakages and measure flow rates. We now need industry support to manufacture the hardware at scale and deploy it across a pilot zone.",
-
   techUsed: [
     "IoT (LoRaWAN)",
     "React / Node.js Dashboard",
     "PostgreSQL for Time-Series Data",
     "Edge AI for anomaly detection",
   ],
-
   supportDetails: [
     "Financial funding for manufacturing 500 sensor units.",
     "Expertise in weather-proofing IoT hardware for municipal deployment.",
@@ -55,11 +53,56 @@ function IndustryProjectDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [supportType, setSupportType] = useState("");
+  const [orgName, setOrgName] = useState("");
+  const [projectData, setProjectData] = useState(null);
 
-  const project = MOCK_PROJECT;
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        if (id) {
+          const res = await api.get(`/projects/${id}`);
+          if (res.data) {
+            setProjectData(res.data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load project details:", err);
+      }
+    };
+    fetchProject();
+  }, [id]);
 
-  const handleSubmit = (e) => {
+  const project = projectData ? {
+    id: projectData._id || id,
+    title: projectData.title || DEFAULT_PROJECT_INFO.title,
+    category: projectData.problemId?.category || DEFAULT_PROJECT_INFO.category,
+    stage: projectData.status || DEFAULT_PROJECT_INFO.stage,
+    location: projectData.problemId?.location?.address || projectData.problemId?.district || DEFAULT_PROJECT_INFO.location,
+    university: projectData.universityId?.name || (projectData.studentTeam?.length ? projectData.studentTeam.join(", ") : DEFAULT_PROJECT_INFO.university),
+    supportReq: DEFAULT_PROJECT_INFO.supportReq,
+    reportsAffected: projectData.problemId?.affectedPopulation ? `${projectData.problemId.affectedPopulation.toLocaleString()} citizens` : DEFAULT_PROJECT_INFO.reportsAffected,
+    duration: DEFAULT_PROJECT_INFO.duration,
+    budgetReq: DEFAULT_PROJECT_INFO.budgetReq,
+    progress: projectData.status === "Completed" ? 100 : (projectData.status === "In Progress" ? 65 : 45),
+    matchScore: 94,
+    description: projectData.proposalDescription || projectData.problemId?.description || DEFAULT_PROJECT_INFO.description,
+    techUsed: DEFAULT_PROJECT_INFO.techUsed,
+    supportDetails: DEFAULT_PROJECT_INFO.supportDetails,
+  } : DEFAULT_PROJECT_INFO;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await api.post("/partners", {
+        companyName: orgName || "Industry Partner",
+        sector: project.category || supportType || "CSR Support",
+        csrFocusAreas: [project.title || "Societal Solutions"],
+        contactEmail: "csr@industry.org",
+        committedFunding: 1000000,
+      });
+    } catch (err) {
+      console.error("Failed to submit partner pledge:", err);
+    }
 
     setIsSubmitted(true);
 
@@ -433,6 +476,8 @@ function IndustryProjectDetails() {
                   type="text"
                   required
                   placeholder="e.g. TechCorp Innovations"
+                  value={orgName}
+                  onChange={(e) => setOrgName(e.target.value)}
                 />
               </div>
 

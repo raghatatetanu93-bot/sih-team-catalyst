@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -15,10 +15,11 @@ import {
   X,
   Send,
 } from "lucide-react";
+import api from "../../api";
 
 import "./FundingOpportunities.css";
 
-const MOCK_OPPORTUNITIES = [
+const DEFAULT_OPPORTUNITIES = [
   {
     id: 1,
     project: "Smart Water Grid Prototype",
@@ -97,13 +98,48 @@ function FundingOpportunities() {
   const [searchTerm, setSearchTerm] = useState("");
   const [supportFilter, setSupportFilter] = useState("All");
   const [stageFilter, setStageFilter] = useState("All");
+  const [opportunitiesList, setOpportunitiesList] = useState(DEFAULT_OPPORTUNITIES);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [pledgeForm, setPledgeForm] = useState({
+    organizationName: "",
+    supportType: "",
+    amount: "",
+    contactPerson: "",
+    message: "",
+  });
+
+  useEffect(() => {
+    const fetchOpportunities = async () => {
+      try {
+        const res = await api.get("/projects");
+        if (res.data && res.data.length > 0) {
+          const liveOpps = res.data.map((p, idx) => ({
+            id: p._id,
+            project: p.title || "Civic Infrastructure Project",
+            university: p.universityId?.name || (p.studentTeam?.length ? p.studentTeam.join(", ") : "State University"),
+            category: p.problemId?.category || "Infrastructure",
+            supportType: ["Funding", "Technology", "Infrastructure", "Mentorship"][idx % 4],
+            fundingReq: `₹${10 + (idx * 5)} Lakhs`,
+            stage: p.status || "Prototype",
+            impact: p.problemId?.affectedPopulation ? `${p.problemId.affectedPopulation.toLocaleString()} citizens` : "15,000 citizens",
+            location: p.problemId?.district || p.problemId?.location?.address || "Jharkhand",
+            match: 95 - (idx * 3),
+            description: p.proposalDescription || p.problemId?.description || "Community-focused innovative technology initiative.",
+          }));
+          setOpportunitiesList(liveOpps);
+        }
+      } catch (err) {
+        console.error("Failed to load opportunities:", err);
+      }
+    };
+    fetchOpportunities();
+  }, []);
 
   const filteredOpps = useMemo(() => {
-    return MOCK_OPPORTUNITIES.filter((opp) => {
+    return opportunitiesList.filter((opp) => {
       const search = searchTerm.toLowerCase();
 
       const matchesSearch =
@@ -126,7 +162,7 @@ function FundingOpportunities() {
         matchesStage
       );
     });
-  }, [searchTerm, supportFilter, stageFilter]);
+  }, [opportunitiesList, searchTerm, supportFilter, stageFilter]);
 
   const clearFilters = () => {
     setSearchTerm("");
@@ -140,8 +176,19 @@ function FundingOpportunities() {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await api.post("/partners", {
+        companyName: pledgeForm.organizationName || "Industry Partner",
+        sector: selectedProject?.category || pledgeForm.supportType || "CSR Funding",
+        csrFocusAreas: [selectedProject?.project || "Societal Impact"],
+        contactEmail: "csr@partner.org",
+        committedFunding: parseInt(String(pledgeForm.amount).replace(/[^0-9]/g, ""), 10) || 500000,
+      });
+    } catch (err) {
+      console.error("Failed to submit partner pledge:", err);
+    }
     setIsSubmitted(true);
 
     setTimeout(() => {
@@ -521,13 +568,19 @@ function FundingOpportunities() {
                       type="text"
                       required
                       placeholder="e.g. TechCorp Innovations"
+                      value={pledgeForm.organizationName}
+                      onChange={(e) => setPledgeForm(prev => ({ ...prev, organizationName: e.target.value }))}
                     />
                   </div>
 
                   <div className="form-group">
                     <label>Support Type</label>
 
-                    <select required>
+                    <select 
+                      required
+                      value={pledgeForm.supportType}
+                      onChange={(e) => setPledgeForm(prev => ({ ...prev, supportType: e.target.value }))}
+                    >
                       <option value="">
                         Select type...
                       </option>
@@ -563,6 +616,8 @@ function FundingOpportunities() {
                       type="text"
                       required
                       placeholder="e.g. ₹10 Lakhs or 200 Cloud Credits"
+                      value={pledgeForm.amount}
+                      onChange={(e) => setPledgeForm(prev => ({ ...prev, amount: e.target.value }))}
                     />
                   </div>
 
@@ -573,6 +628,8 @@ function FundingOpportunities() {
                       type="text"
                       required
                       placeholder="Your name and designation"
+                      value={pledgeForm.contactPerson}
+                      onChange={(e) => setPledgeForm(prev => ({ ...prev, contactPerson: e.target.value }))}
                     />
                   </div>
 
@@ -582,6 +639,8 @@ function FundingOpportunities() {
                     <textarea
                       rows="4"
                       placeholder="Describe your proposed contribution..."
+                      value={pledgeForm.message}
+                      onChange={(e) => setPledgeForm(prev => ({ ...prev, message: e.target.value }))}
                     />
                   </div>
 

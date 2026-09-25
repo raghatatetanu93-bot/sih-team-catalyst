@@ -383,8 +383,8 @@ function AvailableProjects() {
               "Assigned University";
 
             const location =
-              project.problemId?.location?.address ||
-              "Location Unspecified";
+              [project.problemId?.location?.address, project.problemId?.location?.district].filter(Boolean).join(", ") ||
+              (typeof project.problemId?.location === "string" ? project.problemId.location : "Location Unspecified");
 
             const faculty =
               project.facultyMentor ||

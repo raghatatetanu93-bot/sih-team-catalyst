@@ -39,7 +39,35 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
+
+    // Direct role-based login for portal selection
+    if (role && (!email || !password)) {
+      let user = await User.findOne({
+        role: { $regex: new RegExp(`^${role}$`, 'i') },
+      });
+
+      if (!user) {
+        const formattedRole = role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+        user = await User.create({
+          name: `${formattedRole} User`,
+          email: `${role.toLowerCase()}@solvesphere.in`,
+          password: await bcrypt.hash('password123', 10),
+          role: formattedRole,
+        });
+      }
+
+      const token = signToken(user);
+      return res.status(200).json({
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    }
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });

@@ -92,6 +92,8 @@ const citizenItems = [
       <div style={{marginTop: "auto", padding: "1rem"}}>
         <button onClick={() => {
           localStorage.removeItem('userRole');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
           navigate('/');
         }} style={{background: 'transparent', border: 'none', color: '#dc2626', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
           Logout

@@ -600,6 +600,11 @@ button.emergency-stat:hover {
   color: #7545bd;
 }
 
+.alert-status.resolved {
+  background: #e6f7ec;
+  color: #16a34a;
+}
+
 .alert-actions {
   display: flex;
   align-items: center;

@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Projects.css";
+import api from "../../api";
 
 import {
   FolderKanban,
@@ -18,6 +19,69 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+const DEFAULT_PROJECTS = [
+  {
+    id: 1,
+    title: "Rural Water Reliability System",
+    problem: "Unreliable water supply across rural villages",
+    university: "Birla Institute of Technology, Mesra",
+    status: "In Progress",
+    progress: 68,
+    deadline: "Dec 2026",
+    priority: "High",
+    faculty: 12,
+    students: 18,
+    milestones: 7,
+    completedMilestones: 5,
+    impact: "1,840 people",
+  },
+  {
+    id: 2,
+    title: "Smart Flood Monitoring Network",
+    problem: "Recurring urban flooding in Ranchi",
+    university: "IIT (ISM) Dhanbad",
+    status: "In Progress",
+    progress: 42,
+    deadline: "Jan 2027",
+    priority: "High",
+    faculty: 9,
+    students: 14,
+    milestones: 8,
+    completedMilestones: 3,
+    impact: "12,500 people",
+  },
+  {
+    id: 3,
+    title: "Waste Collection Optimization",
+    problem: "Irregular garbage collection in urban areas",
+    university: "NIT Jamshedpur",
+    status: "Planning",
+    progress: 18,
+    deadline: "Mar 2027",
+    priority: "Medium",
+    faculty: 7,
+    students: 11,
+    milestones: 6,
+    completedMilestones: 1,
+    impact: "8,200 people",
+  },
+  {
+    id: 4,
+    title: "Primary Healthcare Access Study",
+    problem: "Shortage of healthcare staff in rural PHCs",
+    university: "Central University of Jharkhand",
+    status: "Completed",
+    progress: 100,
+    deadline: "Completed",
+    priority: "Medium",
+    faculty: 8,
+    students: 15,
+    milestones: 5,
+    completedMilestones: 5,
+    impact: "5,600 people",
+  },
+];
+
 function Projects() {
   const navigate = useNavigate();
 
@@ -28,76 +92,53 @@ function Projects() {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [projectsList, setProjectsList] = useState(DEFAULT_PROJECTS);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Rural Water Reliability System",
-      problem: "Unreliable water supply across rural villages",
-      university: "Birla Institute of Technology, Mesra",
-      status: "In Progress",
-      progress: 68,
-      deadline: "Dec 2026",
-      priority: "High",
-      faculty: 12,
-      students: 18,
-      milestones: 7,
-      completedMilestones: 5,
-      impact: "1,840 people",
-    },
-    {
-      id: 2,
-      title: "Smart Flood Monitoring Network",
-      problem: "Recurring urban flooding in Ranchi",
-      university: "IIT (ISM) Dhanbad",
-      status: "In Progress",
-      progress: 42,
-      deadline: "Jan 2027",
-      priority: "High",
-      faculty: 9,
-      students: 14,
-      milestones: 8,
-      completedMilestones: 3,
-      impact: "12,500 people",
-    },
-    {
-      id: 3,
-      title: "Waste Collection Optimization",
-      problem: "Irregular garbage collection in urban areas",
-      university: "NIT Jamshedpur",
-      status: "Planning",
-      progress: 18,
-      deadline: "Mar 2027",
-      priority: "Medium",
-      faculty: 7,
-      students: 11,
-      milestones: 6,
-      completedMilestones: 1,
-      impact: "8,200 people",
-    },
-    {
-      id: 4,
-      title: "Primary Healthcare Access Study",
-      problem: "Shortage of healthcare staff in rural PHCs",
-      university: "Central University of Jharkhand",
-      status: "Completed",
-      progress: 100,
-      deadline: "Completed",
-      priority: "Medium",
-      faculty: 8,
-      students: 15,
-      milestones: 5,
-      completedMilestones: 5,
-      impact: "5,600 people",
-    },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get("/projects");
+        if (res.data && res.data.length > 0) {
+          const mapped = res.data.map((p) => ({
+            id: p._id,
+            _id: p._id,
+            title: p.title || "Societal Solution Proposal",
+            problem:
+              p.problemId?.description ||
+              p.proposalDescription ||
+              "Addressing prioritized societal issue.",
+            university:
+              p.universityId?.name || "Birla Institute of Technology, Mesra",
+            status:
+              p.status === "Submitted"
+                ? "In Progress"
+                : p.status || "In Progress",
+            progress: 50,
+            deadline: new Date(p.createdAt || Date.now()).toLocaleDateString(),
+            priority: "High",
+            faculty: 4,
+            students: p.studentTeam?.length || 6,
+            milestones: 4,
+            completedMilestones: 2,
+            impact: p.problemId?.affectedPopulation
+              ? `${Number(p.problemId.affectedPopulation).toLocaleString()} people`
+              : "12,000 people",
+          }));
+          setProjectsList(mapped);
+        }
+      } catch (err) {
+        console.warn("Could not fetch government projects:", err);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const universities = [
-    ...new Set(projects.map((project) => project.university)),
+    ...new Set(projectsList.map((project) => project.university)),
   ];
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
+    return projectsList.filter((project) => {
       const search = searchTerm.toLowerCase();
 
       const matchesSearch =

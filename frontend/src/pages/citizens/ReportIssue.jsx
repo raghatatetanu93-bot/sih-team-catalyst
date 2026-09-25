@@ -23,7 +23,21 @@ import {
   X,
   Loader2,
   ChevronRight,
+  Building2,
 } from "lucide-react";
+
+const JHARKHAND_DISTRICTS = [
+  "Ranchi",
+  "Dhanbad",
+  "Jamshedpur",
+  "Bokaro",
+  "Deoghar",
+  "Hazaribagh",
+  "Dumka",
+  "Latehar",
+  "Giridih",
+  "Ramgarh",
+];
 
 function ReportIssue() {
   const navigate = useNavigate();
@@ -81,6 +95,17 @@ function ReportIssue() {
     }));
 
     setLocationDetected(false);
+  };
+
+  const handleDistrictChange = (e) => {
+    const district = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      location: {
+        ...prev.location,
+        district,
+      },
+    }));
   };
 
   const detectLocation = () => {
@@ -307,11 +332,16 @@ function ReportIssue() {
 
     const previewUrl = URL.createObjectURL(file);
 
-    setEvidence({
-      file,
-      previewUrl,
-      name: file.name,
-    });
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEvidence({
+        file,
+        previewUrl,
+        name: file.name,
+        base64: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
 
     setError(null);
   };
@@ -337,13 +367,36 @@ function ReportIssue() {
       return;
     }
 
+    if (!formData.location.district || !formData.location.district.trim()) {
+      setError("Please select a district (required).");
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
 
+      // Ensure base64 photo is ready if file was selected
+      let photoData = evidence?.base64 || "";
+      if (!photoData && evidence?.file) {
+        photoData = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = () => resolve("");
+          reader.readAsDataURL(evidence.file);
+        });
+      }
+
       const payload = {
         description: formData.description,
-        location: formData.location,
+        location: {
+          address: formData.location.address,
+          district: formData.location.district,
+          lat: formData.location.lat,
+          lng: formData.location.lng,
+        },
+        evidenceUrl: photoData || "",
+        photo: photoData || "",
       };
 
       const response = await api.post("/problems", payload);
@@ -518,6 +571,35 @@ function ReportIssue() {
                   ? "Detecting..."
                   : "Use my location"}
               </button>
+            </div>
+
+            <div className="location-box" style={{ marginTop: "12px" }}>
+              <div className="location-icon">
+                <Building2 size={20} />
+              </div>
+
+              <div className="location-content">
+                <span className="location-small-label">
+                  DISTRICT (JHARKHAND) *
+                </span>
+
+                <select
+                  id="district-select"
+                  name="district"
+                  value={formData.location.district}
+                  onChange={handleDistrictChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Select District (Required)
+                  </option>
+                  {JHARKHAND_DISTRICTS.map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {locationDetected && (

@@ -14,6 +14,7 @@ import {
   Send,
   ArrowUpRight,
 } from "lucide-react";
+import api from "../../api";
 
 import "./Partnerships.css";
 
@@ -93,6 +94,13 @@ function Partnerships() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [initiateForm, setInitiateForm] = useState({
+    orgName: "",
+    type: "",
+    project: "",
+    contribution: "",
+    duration: "",
+  });
 
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [actionMessage, setActionMessage] = useState("");
@@ -133,9 +141,19 @@ function Partnerships() {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    try {
+      await api.post("/partners", {
+        companyName: initiateForm.orgName || "Industry Partner",
+        sector: initiateForm.type || "Research",
+        csrFocusAreas: [initiateForm.project || "Societal Development"],
+        contactEmail: "csr@industry.org",
+        committedFunding: 750000,
+      });
+    } catch (err) {
+      console.error("Failed to submit partnership proposal:", err);
+    }
     setIsSubmitted(true);
 
     setTimeout(() => {
@@ -597,13 +615,19 @@ function Partnerships() {
                       type="text"
                       required
                       placeholder="e.g. TechCorp Innovations"
+                      value={initiateForm.orgName}
+                      onChange={(e) => setInitiateForm(prev => ({ ...prev, orgName: e.target.value }))}
                     />
                   </div>
 
                   <div className="form-group">
                     <label>Partnership Type</label>
 
-                    <select required>
+                    <select
+                      required
+                      value={initiateForm.type}
+                      onChange={(e) => setInitiateForm(prev => ({ ...prev, type: e.target.value }))}
+                    >
                       <option value="">
                         Select type...
                       </option>
@@ -641,6 +665,8 @@ function Partnerships() {
                       type="text"
                       required
                       placeholder="e.g. Smart Water Grid"
+                      value={initiateForm.project}
+                      onChange={(e) => setInitiateForm(prev => ({ ...prev, project: e.target.value }))}
                     />
                   </div>
 
@@ -651,6 +677,8 @@ function Partnerships() {
                       rows="4"
                       required
                       placeholder="Describe how your organization plans to contribute..."
+                      value={initiateForm.contribution}
+                      onChange={(e) => setInitiateForm(prev => ({ ...prev, contribution: e.target.value }))}
                     />
                   </div>
 
@@ -661,6 +689,8 @@ function Partnerships() {
                       type="text"
                       required
                       placeholder="e.g. 6 months"
+                      value={initiateForm.duration}
+                      onChange={(e) => setInitiateForm(prev => ({ ...prev, duration: e.target.value }))}
                     />
                   </div>
 

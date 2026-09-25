@@ -168,10 +168,10 @@ function ProblemDetails() {
 
         <button
           className="back-button"
-          onClick={() => navigate("/government/validation")}
+          onClick={() => navigate(-1)}
         >
           <ArrowLeft size={17} />
-          Back to Validation
+          Back
         </button>
 
         <div className="details-actions">
@@ -323,8 +323,9 @@ function ProblemDetails() {
               <div className="info-row">
                 <span>Location</span>
                 <strong>
-                  {problem.location?.address ||
-                    "Not specified"}
+                  {[problem.location?.address, problem.location?.district]
+                    .filter(Boolean)
+                    .join(", ") || (typeof problem.location === "string" ? problem.location : "Not specified")}
                 </strong>
               </div>
 
@@ -359,6 +360,19 @@ function ProblemDetails() {
                 </p>
 
               </div>
+
+              {problem.evidenceUrl && (
+                <div className="description-box" style={{ marginTop: "16px" }}>
+                  <span>Citizen Photo Evidence</span>
+                  <div style={{ marginTop: "10px", borderRadius: "12px", overflow: "hidden", maxWidth: "420px", border: "1px solid #e2e8f0" }}>
+                    <img
+                      src={problem.evidenceUrl}
+                      alt="Citizen photo evidence"
+                      style={{ width: "100%", maxHeight: "320px", objectFit: "cover", display: "block" }}
+                    />
+                  </div>
+                </div>
+              )}
 
             </div>
 

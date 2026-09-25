@@ -27,71 +27,7 @@ import {
 } from "lucide-react";
 
 
-/* =====================================================
-   DEMO MODE
-   ===================================================== */
 
-const DEMO_MODE = true;
-
-
-/* =====================================================
-   DEMO DATA
-   ===================================================== */
-
-const demoStatuses = [
-  "In Progress",
-  "Resolved",
-  "Under Review",
-  "In Progress",
-  "Reported",
-  "Resolved",
-  "Under Review",
-  "In Progress",
-];
-
-const demoSeverities = [
-  "High",
-  "Critical",
-  "Medium",
-  "High",
-  "Low",
-  "Medium",
-  "Critical",
-  "Medium",
-];
-
-const demoCategories = [
-  "Water & Sanitation",
-  "Education",
-  "Roads & Infrastructure",
-  "Waste Management",
-  "Public Health",
-  "Electricity",
-  "Public Safety",
-  "Environment",
-];
-
-const demoLocations = [
-  "Pune",
-  "Lonavala",
-  "Pimpri-Chinchwad",
-  "Hinjewadi",
-  "Kothrud",
-  "Shivajinagar",
-  "Wakad",
-  "Baner",
-];
-
-const demoDescriptions = [
-  "Water supply issue reported by residents in the area.",
-  "Infrastructure issue affecting students and staff.",
-  "Damaged road surface creating difficulties for commuters.",
-  "Garbage accumulation requiring municipal attention.",
-  "Public healthcare facility requires immediate attention.",
-  "Street electricity issue reported by local residents.",
-  "Safety concern reported by citizens in the locality.",
-  "Environmental issue requiring community intervention.",
-];
 
 
 /* =====================================================
@@ -202,44 +138,6 @@ const getStatusClass = (status) => {
 
 
 /* =====================================================
-   ENRICH BACKEND REPORTS
-   ===================================================== */
-
-const enrichReports = (reports) => {
-  if (!DEMO_MODE) {
-    return reports;
-  }
-
-  return reports.map((report, index) => {
-    const demoIndex =
-      index % demoStatuses.length;
-
-    return {
-      ...report,
-
-      demoStatus:
-        demoStatuses[demoIndex],
-
-      demoSeverity:
-        demoSeverities[demoIndex],
-
-      demoCategory:
-        report.category ||
-        demoCategories[demoIndex],
-
-      demoLocation:
-        report.location?.address ||
-        demoLocations[demoIndex],
-
-      demoDescription:
-        report.description ||
-        demoDescriptions[demoIndex],
-    };
-  });
-};
-
-
-/* =====================================================
    COMPONENT
    ===================================================== */
 
@@ -277,7 +175,7 @@ function MyReports() {
         ? response.data.data
         : [];
 
-      setReports(enrichReports(data));
+      setReports(data);
 
     } catch (error) {
       console.error(
@@ -305,29 +203,17 @@ function MyReports() {
   const displayReports = useMemo(() => {
     return reports.map((report) => ({
       ...report,
-
-      category: DEMO_MODE
-        ? report.demoCategory
-        : report.category ||
-          "Community Issue",
-
-      status: DEMO_MODE
-        ? report.demoStatus
-        : normalizeStatus(report),
-
-      severity: DEMO_MODE
-        ? report.demoSeverity
-        : getSeverity(report),
-
-      location: DEMO_MODE
-        ? report.demoLocation
-        : report.location?.address ||
-          "Location unavailable",
-
-      description: DEMO_MODE
-        ? report.demoDescription
-        : report.description ||
-          "Community issue reported.",
+      category: report.category || "Community Issue",
+      status: normalizeStatus(report),
+      severity: getSeverity(report),
+      location:
+        [report.location?.address, report.location?.district]
+          .filter(Boolean)
+          .join(", ") ||
+        (typeof report.location === "string"
+          ? report.location
+          : "Location unavailable"),
+      description: report.description || "Community issue reported.",
     }));
   }, [reports]);
 

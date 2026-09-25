@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./DecisionEngine.css";
 
@@ -15,8 +15,6 @@ import {
   GraduationCap,
   CheckCircle2,
   Target,
-  Zap,
-  IndianRupee,
   Clock3,
   ChevronRight,
   X,
@@ -25,115 +23,165 @@ import {
   SlidersHorizontal,
   ArrowUpRight,
   Lightbulb,
+  IndianRupee,
+  RefreshCw,
+  Loader2,
 } from "lucide-react";
+import api from "../../api";
+
+// Helper to normalize population impact into 0 - 100 score
+const normalizePopulation = (pop) => {
+  const count = Number(pop) || 0;
+  if (count >= 20000) return 100;
+  if (count >= 10000) return 90;
+  if (count >= 5000) return 80;
+  if (count >= 2000) return 70;
+  if (count >= 1000) return 60;
+  if (count >= 500) return 50;
+  if (count >= 100) return 40;
+  if (count > 0) return 30;
+  return 20;
+};
+
+// Compute dynamic weighted Decision Score (0 - 100)
+const computeDecisionScore = (problem) => {
+  const severityMap = { critical: 100, high: 75, medium: 50, low: 25 };
+  const urgencyMap = { critical: 100, high: 75, medium: 50, low: 25 };
+
+  const sVal = severityMap[String(problem.severity || '').toLowerCase()] || 50;
+  const uVal = urgencyMap[String(problem.urgency || '').toLowerCase()] || 50;
+  const pScore = typeof problem.priorityScore === 'number' ? problem.priorityScore : 50;
+  const popScore = normalizePopulation(problem.affectedPopulation);
+
+  // Weighted sum: Severity (25%) + Urgency (25%) + AI PriorityScore (30%) + Population (20%)
+  const composite = Math.round(sVal * 0.25 + uVal * 0.25 + pScore * 0.30 + popScore * 0.20);
+  return Math.min(100, Math.max(10, composite));
+};
 
 function DecisionEngine() {
   const navigate = useNavigate();
+
+  const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [selectedDecision, setSelectedDecision] = useState(null);
   const [search, setSearch] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [decisionStates, setDecisionStates] = useState({});
 
-  const recommendations = [
-    {
-      id: "DEC-001",
-      title: "Rural Water Supply Crisis",
-      location: "West Singhbhum",
-      priority: "Critical",
-      score: 94,
-      impactScore: 96,
-      urgency: 98,
-      feasibility: 82,
-      affected: "48,000+",
-      timeline: "0–3 months",
-      investment: "₹18–25L",
-      recommendation:
-        "Immediately deploy a joint water infrastructure task force and assign the challenge to technical institutions.",
-      rationale:
-        "Multiple citizen reports indicate recurring water reliability problems. The issue affects a large rural population and has strong university capability matches.",
-      stakeholder: "Government + Universities",
-      institution: "BIT Mesra",
-      impact: "High Impact",
-      nextAction: "Find Solution Partners",
-    },
-    {
-      id: "DEC-002",
-      title: "Urban Flooding in Ranchi",
-      location: "Ranchi",
-      priority: "High",
-      score: 87,
-      impactScore: 91,
-      urgency: 89,
-      feasibility: 79,
-      affected: "31,500+",
-      timeline: "3–6 months",
-      investment: "₹12–18L",
-      recommendation:
-        "Develop an AI-enabled flood monitoring and early warning system using real-time environmental data.",
-      rationale:
-        "Flood-related reports show recurring concentration around urban drainage zones. A technology-led intervention could improve early warning and response coordination.",
-      stakeholder: "Government + Research Institutions",
-      institution: "IIT (ISM) Dhanbad",
-      impact: "High Impact",
-      nextAction: "Review Solution",
-    },
-    {
-      id: "DEC-003",
-      title: "Waste Collection Inefficiency",
-      location: "Jamshedpur",
-      priority: "Medium",
-      score: 72,
-      impactScore: 76,
-      urgency: 68,
-      feasibility: 88,
-      affected: "18,000+",
-      timeline: "6–9 months",
-      investment: "₹7–10L",
-      recommendation:
-        "Launch a smart waste route optimization project with municipal and university collaboration.",
-      rationale:
-        "The problem has strong feasibility because existing municipal workflows can be improved using route optimization and operational analytics.",
-      stakeholder: "Municipality + Universities",
-      institution: "NIT Jamshedpur",
-      impact: "Medium Impact",
-      nextAction: "Review Solution",
-    },
-    {
-      id: "DEC-004",
-      title: "Primary Healthcare Access Gap",
-      location: "Latehar",
-      priority: "High",
-      score: 84,
-      impactScore: 93,
-      urgency: 86,
-      feasibility: 74,
-      affected: "22,000+",
-      timeline: "3–6 months",
-      investment: "₹10–15L",
-      recommendation:
-        "Pilot a mobile healthcare coordination system connecting underserved communities with healthcare providers.",
-      rationale:
-        "The combination of population impact and accessibility constraints suggests that a coordinated mobile-first intervention could improve service reach.",
-      stakeholder: "Government + Healthcare Institutions",
-      institution: "Central University of Jharkhand",
-      impact: "High Impact",
-      nextAction: "Review Solution",
-    },
-  ];
+  const fetchValidatedProblems = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Pull problems from API specifically filtering for validated problems
+      const res = await api.get("/problems?status=Validated");
+      setProblems(res.data || []);
+    } catch (err) {
+      console.error("Failed to load validated problems for Decision Engine:", err);
+      setError("Unable to load validated problems from server.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchValidatedProblems();
+  }, []);
+
+  // Compute recommendations dynamically sorted by weighted decision score
+  const recommendations = useMemo(() => {
+    if (!problems || problems.length === 0) return [];
+
+    return [...problems]
+      .sort((a, b) => computeDecisionScore(b) - computeDecisionScore(a))
+      .map((problem, index) => {
+        const rawId = problem._id;
+        const shortId =
+          problem.problemId ||
+          (rawId ? `DEC-${String(rawId).slice(-3).toUpperCase()}` : `DEC-00${index + 1}`);
+
+        const score = computeDecisionScore(problem);
+
+        const sVal =
+          { critical: 100, high: 75, medium: 50, low: 25 }[
+            String(problem.severity || '').toLowerCase()
+          ] || 50;
+        const uVal =
+          { critical: 100, high: 75, medium: 50, low: 25 }[
+            String(problem.urgency || '').toLowerCase()
+          ] || 50;
+        const popScore = normalizePopulation(problem.affectedPopulation);
+
+        const priority =
+          score >= 85 ? "Critical" : score >= 70 ? "High" : score >= 50 ? "Medium" : "Low";
+
+        const locationName = problem.location?.district
+          ? `${problem.location.district} District`
+          : problem.location?.address || "Jharkhand";
+
+        const institution =
+          problem.assignedUniversity?.name ||
+          (problem.suggestedSolutionArea
+            ? `${problem.suggestedSolutionArea} Research Lab`
+            : "BIT Mesra / Technical Institute");
+
+        let timeline = "3–6 months";
+        let investment = "₹10–15L";
+        if (score >= 85) {
+          timeline = "0–3 months";
+          investment = "₹18–25L";
+        } else if (score < 65) {
+          timeline = "6–9 months";
+          investment = "₹5–8L";
+        }
+
+        return {
+          rawId,
+          id: shortId,
+          title:
+            problem.title ||
+            (problem.category ? `${problem.category} Intervention` : "Societal Challenge"),
+          location: locationName,
+          priority,
+          score,
+          impactScore: Math.min(100, Math.round((sVal + popScore) / 2)),
+          urgency: uVal,
+          feasibility: Math.min(100, Math.max(65, 100 - Math.round(sVal * 0.2))),
+          affected: problem.affectedPopulation
+            ? `${Number(problem.affectedPopulation).toLocaleString()}+`
+            : "1,000+",
+          affectedNum: Number(problem.affectedPopulation) || 0,
+          timeline,
+          investment,
+          recommendation:
+            problem.suggestedSolutionArea ||
+            problem.summary ||
+            "Deploy a coordinated civic task force with university engineering partner teams for rapid solutioning.",
+          rationale:
+            problem.summary ||
+            `Validated problem in ${locationName} has an assessed priority score of ${score}/100. High societal impact with strong university collaboration potential.`,
+          stakeholder: "Government + Technical Institutions",
+          institution,
+          impact: score >= 75 ? "High Impact" : "Medium Impact",
+          nextAction: "Find Solution Partners",
+        };
+      });
+  }, [problems]);
 
   const filteredRecommendations = useMemo(() => {
     return recommendations.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(search.toLowerCase()) ||
-        item.location.toLowerCase().includes(search.toLowerCase());
+        item.location.toLowerCase().includes(search.toLowerCase()) ||
+        item.id.toLowerCase().includes(search.toLowerCase());
 
       const matchesPriority =
         priorityFilter === "All" || item.priority === priorityFilter;
 
       return matchesSearch && matchesPriority;
     });
-  }, [search, priorityFilter]);
+  }, [recommendations, search, priorityFilter]);
 
   const handleDecision = (id, action) => {
     setDecisionStates((prev) => ({
@@ -146,6 +194,13 @@ function DecisionEngine() {
     navigate("/government/university-matching");
   };
 
+  // Top indicators
+  const highestRecommendation = recommendations[0] || null;
+  const criticalCount = recommendations.filter((r) => r.priority === "Critical").length;
+  const avgConfidence = recommendations.length
+    ? Math.round(recommendations.reduce((sum, r) => sum + r.score, 0) / recommendations.length)
+    : 89;
+
   return (
     <div className="decision-page">
       {/* HEADER */}
@@ -154,15 +209,26 @@ function DecisionEngine() {
           <p className="eyebrow">AI DECISION INTELLIGENCE</p>
           <h1>Societal Decision Engine</h1>
           <p>
-            AI-powered recommendations to help government prioritize problems,
-            allocate resources, and identify the best innovation pathways.
+            AI-powered recommendations to help government prioritize validated societal problems, allocate resources, and identify the best innovation pathways.
           </p>
         </div>
 
-        <div className="ai-status">
-          <span className="status-dot"></span>
-          <Sparkles size={17} />
-          AI Engine Active
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <button
+            onClick={fetchValidatedProblems}
+            className="ai-status"
+            style={{ cursor: "pointer", border: "none" }}
+            title="Refresh Decision Engine Recommendations"
+          >
+            <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
+            Sync Engine
+          </button>
+
+          <div className="ai-status">
+            <span className="status-dot"></span>
+            <Sparkles size={17} />
+            AI Engine Active ({recommendations.length} Validated Cases)
+          </div>
         </div>
       </div>
 
@@ -173,8 +239,8 @@ function DecisionEngine() {
             <Brain size={23} />
           </div>
           <div>
-            <span>Problems Analysed</span>
-            <strong>156</strong>
+            <span>Validated Analysed</span>
+            <strong>{recommendations.length}</strong>
             <small>Across all districts</small>
           </div>
         </div>
@@ -184,8 +250,8 @@ function DecisionEngine() {
             <ShieldAlert size={23} />
           </div>
           <div>
-            <span>Critical Issues</span>
-            <strong>12</strong>
+            <span>Critical Priority</span>
+            <strong>{criticalCount}</strong>
             <small>Require immediate review</small>
           </div>
         </div>
@@ -195,9 +261,9 @@ function DecisionEngine() {
             <TrendingUp size={23} />
           </div>
           <div>
-            <span>AI Recommendations</span>
-            <strong>38</strong>
-            <small>Generated this cycle</small>
+            <span>AI Pathways</span>
+            <strong>{recommendations.length}</strong>
+            <small>Ranked by impact & urgency</small>
           </div>
         </div>
 
@@ -206,9 +272,9 @@ function DecisionEngine() {
             <CheckCircle2 size={23} />
           </div>
           <div>
-            <span>Success Confidence</span>
-            <strong>89%</strong>
-            <small>Average confidence</small>
+            <span>Decision Confidence</span>
+            <strong>{highestRecommendation ? `${highestRecommendation.score}%` : `${avgConfidence}%`}</strong>
+            <small>Average confidence: {avgConfidence}%</small>
           </div>
         </div>
       </div>
@@ -233,9 +299,9 @@ function DecisionEngine() {
             </div>
 
             <div>
-              <h3>Highest Priority Area</h3>
-              <p>Water accessibility and infrastructure reliability</p>
-              <strong>Priority Score: 94 / 100</strong>
+              <h3>Highest Priority Focus Area</h3>
+              <p>{highestRecommendation ? highestRecommendation.title : "Water accessibility and infrastructure reliability"}</p>
+              <strong>Priority Score: {highestRecommendation ? highestRecommendation.score : 94} / 100</strong>
             </div>
           </div>
 
@@ -245,9 +311,9 @@ function DecisionEngine() {
             </div>
 
             <div>
-              <h3>Most Affected Region</h3>
-              <p>West Singhbhum and surrounding rural districts</p>
-              <strong>Estimated Population Impact: 48,000+</strong>
+              <h3>Most Critical Region</h3>
+              <p>{highestRecommendation ? highestRecommendation.location : "West Singhbhum and surrounding districts"}</p>
+              <strong>Estimated Population Impact: {highestRecommendation ? highestRecommendation.affected : "48,000+"}</strong>
             </div>
           </div>
 
@@ -257,9 +323,9 @@ function DecisionEngine() {
             </div>
 
             <div>
-              <h3>Recommended Collaboration</h3>
-              <p>Government, universities and technical research teams</p>
-              <strong>Best Match Confidence: 91%</strong>
+              <h3>Recommended Collaboration Partner</h3>
+              <p>{highestRecommendation ? highestRecommendation.institution : "Government, universities and technical research teams"}</p>
+              <strong>Match Confidence: {highestRecommendation ? `${highestRecommendation.score}%` : "91%"}</strong>
             </div>
           </div>
         </div>
@@ -274,37 +340,40 @@ function DecisionEngine() {
 
           <p>AI PRIORITY ENGINE</p>
 
-          <h2>94%</h2>
+          <h2>{highestRecommendation ? `${highestRecommendation.score}%` : "94%"}</h2>
 
-          <span>Decision Confidence</span>
+          <span>Top Priority Score</span>
 
           <div className="confidence-row">
-            <span>Confidence</span>
-            <strong>94 / 100</strong>
+            <span>Overall Index</span>
+            <strong>{highestRecommendation ? `${highestRecommendation.score} / 100` : "94 / 100"}</strong>
           </div>
 
           <div className="confidence-bar">
-            <div className="confidence-fill"></div>
+            <div
+              className="confidence-fill"
+              style={{ width: `${highestRecommendation ? highestRecommendation.score : 94}%` }}
+            ></div>
           </div>
 
           <div className="engine-indicators">
             <span>
               <CheckCircle2 size={14} />
-              Impact analysed
+              Severity weighted
             </span>
             <span>
               <CheckCircle2 size={14} />
-              Urgency analysed
+              Urgency weighted
             </span>
             <span>
               <CheckCircle2 size={14} />
-              Feasibility analysed
+              Population weighted
             </span>
           </div>
 
           <div className="engine-footer">
             <Brain size={14} />
-            Based on 12 societal indicators
+            Dynamic weighted synthesis of validated cases
           </div>
         </div>
       </div>
@@ -316,8 +385,7 @@ function DecisionEngine() {
             <p className="eyebrow">AI RECOMMENDATIONS</p>
             <h2>Priority Actions</h2>
             <span>
-              Recommended innovation pathways based on urgency, impact and
-              available resources.
+              Recommended innovation pathways based on urgency, impact, severity and affected population.
             </span>
           </div>
 
@@ -339,7 +407,7 @@ function DecisionEngine() {
             <Search size={17} />
             <input
               type="text"
-              placeholder="Search problems or locations..."
+              placeholder="Search problems, locations or IDs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -355,101 +423,125 @@ function DecisionEngine() {
               <option value="Critical">Critical</option>
               <option value="High">High</option>
               <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
             </select>
           </div>
         </div>
 
         <div className="recommendation-count">
-          Showing <strong>{filteredRecommendations.length}</strong>{" "}
-          AI-generated decisions
+          Showing <strong>{filteredRecommendations.length}</strong> validated cases ranked by AI Decision Engine
         </div>
 
-        <div className="recommendation-list">
-          {filteredRecommendations.map((item, index) => {
-            const state = decisionStates[item.id];
+        {loading ? (
+          <div style={{ padding: "50px", textAlign: "center", color: "#64748b" }}>
+            <Loader2 size={32} className="animate-spin" style={{ margin: "0 auto 12px" }} />
+            <p>Evaluating validated problems and computing AI decision priorities...</p>
+          </div>
+        ) : error ? (
+          <div style={{ padding: "30px", textAlign: "center", color: "#dc2626" }}>
+            <AlertTriangle size={32} style={{ margin: "0 auto 8px" }} />
+            <p>{error}</p>
+            <button
+              onClick={fetchValidatedProblems}
+              style={{
+                marginTop: "12px",
+                padding: "8px 16px",
+                background: "#2563eb",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+              }}
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <div className="recommendation-list">
+            {filteredRecommendations.map((item, index) => {
+              const state = decisionStates[item.id];
 
-            return (
-              <div
-                className={`recommendation-card ${
-                  state ? "decision-completed" : ""
-                }`}
-                key={item.id}
-              >
-                <div className="recommendation-number">
-                  0{index + 1}
-                </div>
+              return (
+                <div
+                  className={`recommendation-card ${
+                    state ? "decision-completed" : ""
+                  }`}
+                  key={item.rawId || item.id}
+                >
+                  <div className="recommendation-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
 
-                <div className="recommendation-content">
-                  <div className="recommendation-title">
-                    <div>
-                      <div className="decision-id">{item.id}</div>
+                  <div className="recommendation-content">
+                    <div className="recommendation-title">
+                      <div>
+                        <div className="decision-id">{item.id}</div>
+                        <h3>{item.title}</h3>
+                        <span className="location">
+                          <MapPin size={14} />
+                          {item.location}
+                        </span>
+                      </div>
 
-                      <h3>{item.title}</h3>
-
-                      <span className="location">
-                        <MapPin size={14} />
-                        {item.location}
+                      <span
+                        className={`priority-badge ${item.priority.toLowerCase()}`}
+                      >
+                        {item.priority}
                       </span>
                     </div>
 
-                    <span
-                      className={`priority-badge ${item.priority.toLowerCase()}`}
-                    >
-                      {item.priority}
-                    </span>
-                  </div>
+                    <p>{item.recommendation}</p>
 
-                  <p>{item.recommendation}</p>
+                    <div className="recommendation-meta">
+                      <span>
+                        <Building2 size={15} />
+                        {item.stakeholder}
+                      </span>
 
-                  <div className="recommendation-meta">
-                    <span>
-                      <Building2 size={15} />
-                      {item.stakeholder}
-                    </span>
+                      <span>
+                        <GraduationCap size={15} />
+                        {item.institution}
+                      </span>
 
-                    <span>
-                      <GraduationCap size={15} />
-                      {item.institution}
-                    </span>
-
-                    <span>
-                      <Users size={15} />
-                      {item.affected} affected
-                    </span>
-                  </div>
-
-                  {state && (
-                    <div className="decision-state">
-                      <CheckCircle2 size={15} />
-                      Decision marked as {state}
+                      <span>
+                        <Users size={15} />
+                        {item.affected} affected
+                      </span>
                     </div>
-                  )}
-                </div>
 
-                <div className="recommendation-actions">
-                  <div className="score-circle">
-                    <strong>{item.score}</strong>
-                    <span>Score</span>
+                    {state && (
+                      <div className="decision-state">
+                        <CheckCircle2 size={15} />
+                        Decision marked as {state}
+                      </div>
+                    )}
                   </div>
 
-                  <button
-                    className="details-button"
-                    onClick={() => setSelectedDecision(item)}
-                  >
-                    Details
-                    <ChevronRight size={15} />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                  <div className="recommendation-actions">
+                    <div className="score-circle">
+                      <strong>{item.score}</strong>
+                      <span>Score</span>
+                    </div>
 
-        {filteredRecommendations.length === 0 && (
+                    <button
+                      className="details-button"
+                      onClick={() => setSelectedDecision(item)}
+                    >
+                      Details
+                      <ChevronRight size={15} />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {!loading && filteredRecommendations.length === 0 && (
           <div className="decision-empty">
             <Search size={32} />
-            <h3>No decisions found</h3>
-            <p>Try changing your search or priority filter.</p>
+            <h3>No validated decisions found</h3>
+            <p>Ensure problems are marked as "Validated" by Government officials to appear in the Decision Engine queue.</p>
           </div>
         )}
       </div>
@@ -522,7 +614,6 @@ function DecisionEngine() {
                 <Lightbulb size={18} />
                 AI Recommendation
               </div>
-
               <p>{selectedDecision.recommendation}</p>
             </div>
 
@@ -531,7 +622,6 @@ function DecisionEngine() {
                 <Brain size={18} />
                 Why AI recommends this
               </div>
-
               <p>{selectedDecision.rationale}</p>
             </div>
 

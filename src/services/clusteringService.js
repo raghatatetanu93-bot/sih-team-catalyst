@@ -1,7 +1,12 @@
 const Cluster = require('../models/Cluster');
 
 async function groupProblemIntoCluster(problem) {
-  if (!problem.location || !problem.location.district || !problem.category) return;
+  if (!problem.location || !problem.location.district || !problem.category) {
+    if (process.env.DEBUG) console.log(`[clusteringService] Early exit: district="${problem?.location?.district}", category="${problem?.category}"`);
+    return;
+  }
+
+  if (process.env.DEBUG) console.log(`[clusteringService] Clustering problem ${problem._id}: District="${problem.location.district}", Category="${problem.category}"`);
 
   // 1. Look for an existing cluster in the same district and category
   let cluster = await Cluster.findOne({

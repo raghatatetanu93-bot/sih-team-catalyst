@@ -23,89 +23,131 @@ import {
   Plus,
 } from "lucide-react";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
+
+const getCategoryIcon = (category = "") => {
+  const c = String(category).toLowerCase();
+  if (c.includes("water")) return Droplets;
+  if (c.includes("infra") || c.includes("road") || c.includes("bridge") || c.includes("build")) return Building2;
+  if (c.includes("health") || c.includes("medical")) return HeartPulse;
+  if (c.includes("waste") || c.includes("garbage") || c.includes("sanitat")) return Trash2;
+  return AlertTriangle;
+};
 
 function Problems() {
   const navigate = useNavigate();
 
-  const problems = [
-    {
-      id: "PRB-1024",
-      title: "Urban Flooding",
-      description:
-        "Heavy rainfall has caused severe waterlogging in residential areas.",
-      location: "Ranchi",
-      district: "Ranchi District",
-      category: "Water",
-      icon: Droplets,
-      severity: "High",
-      affected: "1,200",
-      status: "Pending Validation",
-      date: "May 24, 2026",
-      time: "10:24 AM",
-    },
-    {
-      id: "PRB-1025",
-      title: "Water Supply Failure",
-      description:
-        "No water supply from last 5 days in multiple villages.",
-      location: "Latehar",
-      district: "Latehar District",
-      category: "Water",
-      icon: Droplets,
-      severity: "High",
-      affected: "840",
-      status: "High Risk",
-      date: "May 24, 2026",
-      time: "09:15 AM",
-    },
-    {
-      id: "PRB-1026",
-      title: "Damaged Bridge",
-      description:
-        "Bridge is damaged making travel unsafe for vehicles.",
-      location: "West Singhbhum",
-      district: "West Singhbhum District",
-      category: "Infrastructure",
-      icon: Building2,
-      severity: "Medium",
-      affected: "560",
-      status: "Under Review",
-      date: "May 24, 2026",
-      time: "08:15 AM",
-    },
-    {
-      id: "PRB-1027",
-      title: "PHC Staff Shortage",
-      description:
-        "Primary Health Center has no doctor for a week.",
-      location: "Dumka",
-      district: "Dumka District",
-      category: "Healthcare",
-      icon: HeartPulse,
-      severity: "Medium",
-      affected: "320",
-      status: "Pending Validation",
-      date: "May 23, 2026",
-      time: "06:30 PM",
-    },
-    {
-      id: "PRB-1028",
-      title: "Garbage Not Collected",
-      description:
-        "Garbage piling up on streets for more than a week.",
-      location: "Jamshedpur",
-      district: "East Singhbhum District",
-      category: "Waste Management",
-      icon: Trash2,
-      severity: "Low",
-      affected: "210",
-      status: "Validated",
-      date: "May 23, 2026",
-      time: "04:10 PM",
-    },
-  ];
+  const [rawProblems, setRawProblems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchProblems = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await api.get("/problems");
+      const data = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data?.data)
+        ? res.data.data
+        : [];
+      setRawProblems(data);
+    } catch (err) {
+      console.error("Failed to fetch problems:", err);
+      setError("Failed to load problems from server.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProblems();
+  }, []);
+
+  const problems = useMemo(() => {
+    return rawProblems.map((p, index) => {
+      const d = p.createdAt ? new Date(p.createdAt) : new Date();
+      const date = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+      const time = d.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const locationAddr =
+        p.location?.address ||
+        (typeof p.location === "string" ? p.location : "Location unavailable");
+      const districtStr = p.location?.district || "Jharkhand";
+
+      return {
+        _id: p._id,
+        id: p._id,
+        displayId:
+          p.problemId ||
+          `PRB-${p._id ? p._id.slice(-4).toUpperCase() : String(index + 1).padStart(4, "0")}`,
+        title:
+          p.title ||
+          (p.summary
+            ? p.summary.length > 50
+              ? p.summary.slice(0, 47) + "..."
+              : p.summary
+            : `${p.category || "Community"} Report`),
+        description: p.description || "No description provided.",
+        location: locationAddr,
+        district: districtStr,
+        category: p.category || "Community Issue",
+        icon: getCategoryIcon(p.category),
+        severity: p.severity || "Medium",
+        affected: p.affectedPopulation
+          ? Number(p.affectedPopulation).toLocaleString("en-IN")
+          : "0",
+        status: p.governmentStatus || p.status || "Reported",
+        date,
+        time,
+        emergencyStatus: p.emergencyStatus || false,
+        createdAt: p.createdAt,
+      };
+    });
+  }, [rawProblems]);
+
+  const statsCounts = useMemo(() => {
+    const total = problems.length;
+    const validated = problems.filter((p) => p.status === "Validated").length;
+    const highRisk = problems.filter(
+      (p) =>
+        p.severity === "High" ||
+        p.severity === "Critical" ||
+        p.status === "High Risk" ||
+        p.emergencyStatus
+    ).length;
+    const underReview = problems.filter(
+      (p) =>
+        p.status === "Under Review" ||
+        p.status === "Pending Validation" ||
+        p.status === "Reported"
+    ).length;
+    const resolved = problems.filter((p) => p.status === "Resolved").length;
+
+    return { total, validated, highRisk, underReview, resolved };
+  }, [problems]);
+
+  const availableCategories = useMemo(() => {
+    const fromData = problems.map((p) => p.category).filter(Boolean);
+    const defaults = [
+      "Water & Sanitation",
+      "Infrastructure",
+      "Public Health",
+      "Waste Management",
+      "Education",
+      "Water",
+    ];
+    return Array.from(new Set([...fromData, ...defaults]));
+  }, [problems]);
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
@@ -179,7 +221,7 @@ function Problems() {
         matchesStat
       );
     });
-  }, [search, category, severity, status, activeStat]);
+  }, [problems, search, category, severity, status, activeStat]);
 
   /* =====================================================
      PAGINATION
@@ -302,11 +344,11 @@ function Problems() {
           }}
         >
           <option>All Categories</option>
-          <option>Water</option>
-          <option>Infrastructure</option>
-          <option>Healthcare</option>
-          <option>Waste Management</option>
-          <option>Education</option>
+          {availableCategories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
         </select>
 
         <select
@@ -422,7 +464,7 @@ function Problems() {
 
           <div>
             <span>Total Reported</span>
-            <strong>1,284</strong>
+            <strong>{statsCounts.total}</strong>
             <small>All citizen reports</small>
           </div>
         </button>
@@ -442,8 +484,8 @@ function Problems() {
 
           <div>
             <span>Validated</span>
-            <strong>842</strong>
-            <small>65.6% of total</small>
+            <strong>{statsCounts.validated}</strong>
+            <small>{statsCounts.total > 0 ? ((statsCounts.validated / statsCounts.total) * 100).toFixed(1) : 0}% of total</small>
           </div>
         </button>
 
@@ -462,7 +504,7 @@ function Problems() {
 
           <div>
             <span>High Risk</span>
-            <strong>37</strong>
+            <strong>{statsCounts.highRisk}</strong>
             <small>Requires immediate action</small>
           </div>
         </button>
@@ -482,7 +524,7 @@ function Problems() {
 
           <div>
             <span>Under Review</span>
-            <strong>126</strong>
+            <strong>{statsCounts.underReview}</strong>
             <small>Currently in process</small>
           </div>
         </button>
@@ -502,7 +544,7 @@ function Problems() {
 
           <div>
             <span>Resolved</span>
-            <strong>976</strong>
+            <strong>{statsCounts.resolved}</strong>
             <small>Problems resolved</small>
           </div>
         </button>
@@ -550,7 +592,13 @@ function Problems() {
           <span>ACTIONS</span>
         </div>
 
-        {visibleProblems.length === 0 ? (
+        {loading ? (
+          <div className="no-problems" style={{ padding: "40px" }}>
+            <RefreshCw size={30} style={{ animation: "spin 1s linear infinite", color: "#147d7e" }} />
+            <h3 style={{ marginTop: "14px" }}>Loading reported problems...</h3>
+            <p>Fetching real records from MongoDB.</p>
+          </div>
+        ) : visibleProblems.length === 0 ? (
           <div className="no-problems">
             <Search size={36} />
 
@@ -591,8 +639,8 @@ function Problems() {
 
                     <p>{problem.description}</p>
 
-                    <small className="problem-id">
-                      {problem.id}
+                    <small className="problem-id" title={problem._id}>
+                      {problem.displayId}
                     </small>
                   </div>
 
@@ -665,7 +713,7 @@ function Problems() {
                     className="view-button"
                     onClick={() =>
                       navigate(
-                        `/government/problems/${problem.id}`
+                        `/government/problems/${problem._id || problem.id}`
                       )
                     }
                   >
@@ -694,7 +742,7 @@ function Problems() {
                         <button
                           onClick={() => {
                             navigate(
-                              `/government/problems/${problem.id}`
+                              `/government/problems/${problem._id || problem.id}`
                             );
                             clearMenu();
                           }}
