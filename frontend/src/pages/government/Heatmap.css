@@ -77,14 +77,14 @@
 .heatmap-filters {
   display: flex !important;
   align-items: center !important;
-  gap: 9px !important;
+  gap: 10px !important;
   flex-wrap: wrap !important;
   margin-bottom: 18px !important;
 }
 
 .heatmap-search {
-  width: 235px;
-  min-width: 235px;
+  flex: 1 1 220px;
+  max-width: 320px;
   height: 38px;
   display: flex;
   align-items: center;
@@ -94,6 +94,36 @@
   border-radius: 9px;
   background: #ffffff;
   box-sizing: border-box;
+}
+
+.heatmap-selects {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.heatmap-selects select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #dfe4ec;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #465164;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+.heatmap-selects select:hover {
+  border-color: #cbd5e1;
+}
+
+.heatmap-selects select:focus {
+  border-color: #3b4cca;
 }
 
 .heatmap-search svg {
@@ -673,8 +703,9 @@
   background: #4d70d9;
 }
 
-.selected-location-icon.low {
-  background: #42ad73;
+.selected-location-top > div {
+  min-width: 0;
+  flex: 1;
 }
 
 .selected-location-top strong {
@@ -683,6 +714,7 @@
   font-size: 14px !important;
   font-weight: 750 !important;
   letter-spacing: normal !important;
+  word-break: break-word;
 }
 
 .selected-location-top span {
@@ -691,6 +723,7 @@
   color: #929baa !important;
   font-size: 10px !important;
   letter-spacing: normal !important;
+  word-break: break-word;
 }
 
 .selected-location-card p {
@@ -700,6 +733,7 @@
   line-height: 1.45 !important;
   text-align: left;
   letter-spacing: normal !important;
+  word-break: break-word;
 }
 
 .selected-location-metrics {
@@ -1221,6 +1255,20 @@
 
   .heatmap-search {
     grid-column: auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+
+  .heatmap-selects {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .heatmap-selects select {
+    width: 100% !important;
   }
 
   .heatmap-side-panel {

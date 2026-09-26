@@ -246,13 +246,13 @@ function AvailableChallenges() {
                   <span>AI Match</span>
                 </div>
 
-                <h3>
+                <h3 title={challenge.title || challenge.category || "Societal Challenge"}>
                   {challenge.title ||
                     challenge.category ||
                     "Societal Challenge"}
                 </h3>
 
-                <p className="challenge-desc">
+                <p className="challenge-desc" title={challenge.description}>
                   {challenge.description}
                 </p>
 
@@ -261,7 +261,7 @@ function AvailableChallenges() {
 
                   <div className="meta-item">
                     <MapPin size={16} />
-                    <span>
+                    <span title={challenge.location?.address || challenge.location || "Location not specified"}>
                       {challenge.location?.address ||
                         challenge.location ||
                         "Location not specified"}

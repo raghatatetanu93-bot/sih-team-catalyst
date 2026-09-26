@@ -49,9 +49,9 @@ import IndustryProjectDetails from "./pages/industry/IndustryProjectDetails";
 import FundingOpportunities from "./pages/industry/FundingOpportunities";
 
 const Layout = ({ role }) => (
-  <div style={{ display: "flex", minHeight: "100vh" }}>
+  <div className="app-layout">
     <Sidebar role={role} />
-    <main style={{ flex: 1, backgroundColor: "#f9fafb" }}>
+    <main className="app-main">
       <Outlet />
     </main>
   </div>

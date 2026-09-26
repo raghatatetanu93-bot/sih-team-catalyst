@@ -629,70 +629,63 @@ function Problems() {
                 {/* PROBLEM */}
 
                 <div className="problem-title-cell">
-
                   <div className="problem-type-icon">
                     <ProblemIcon size={20} />
                   </div>
 
                   <div>
-                    <strong>{problem.title}</strong>
-
-                    <p>{problem.description}</p>
-
+                    <strong title={problem.title}>{problem.title}</strong>
+                    <p title={problem.description}>{problem.description}</p>
                     <small className="problem-id" title={problem._id}>
                       {problem.displayId}
                     </small>
                   </div>
-
                 </div>
 
                 {/* LOCATION */}
-
                 <div className="location-cell">
-                  <div>
+                  <div title={problem.location}>
                     <MapPin size={15} />
                     <strong>{problem.location}</strong>
                   </div>
-
-                  <small>{problem.district}</small>
+                  <small title={problem.district}>{problem.district}</small>
                 </div>
 
                 {/* CATEGORY */}
-
                 <div>
                   <span
                     className={`category-badge ${problem.category
                       .toLowerCase()
-                      .replaceAll(" ", "-")}`}
+                      .replace(/[^a-z0-9]/g, "-")}`}
+                    title={problem.category}
                   >
                     {problem.category}
                   </span>
                 </div>
 
                 {/* SEVERITY */}
-
                 <div>
                   <span
                     className={`severity-badge ${problem.severity.toLowerCase()}`}
+                    title={`Severity: ${problem.severity}`}
                   >
                     {problem.severity}
                   </span>
                 </div>
 
                 {/* AFFECTED */}
-
                 <div className="affected-cell">
                   <strong>{problem.affected}</strong>
                   <small>people</small>
                 </div>
 
                 {/* STATUS */}
-
                 <div>
                   <span
                     className={`status-badge ${problem.status
                       .toLowerCase()
-                      .replaceAll(" ", "-")}`}
+                      .replace(/[^a-z0-9]/g, "-")}`}
+                    title={`Status: ${problem.status}`}
                   >
                     {problem.status}
                   </span>

@@ -368,21 +368,22 @@ function Projects() {
 
                     <div className="project-title-row">
 
-                      <h3>{project.title}</h3>
+                      <h3 title={project.title}>{project.title}</h3>
 
                       <span
                         className={`project-priority ${project.priority.toLowerCase()}`}
+                        title={`Priority: ${project.priority}`}
                       >
                         {project.priority}
                       </span>
 
                     </div>
 
-                    <p>
+                    <p title={project.problem}>
                       {project.problem}
                     </p>
 
-                    <small>
+                    <small title={project.university}>
                       <GraduationCap size={14} />
                       {project.university}
                     </small>

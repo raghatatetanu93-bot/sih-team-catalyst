@@ -237,6 +237,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 13px;
 }
@@ -249,6 +250,8 @@
   color: #475569;
   font-size: 10px;
   font-weight: 800;
+  max-width: 100%;
+  word-break: break-word;
 }
 
 .priority-badge {
@@ -256,6 +259,7 @@
   border-radius: 20px;
   font-size: 10px;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .priority-badge.high {
@@ -303,6 +307,7 @@
   color: #17213a;
   font-size: 18px;
   line-height: 1.3;
+  word-break: break-word;
 }
 
 .challenge-desc {
@@ -311,6 +316,11 @@
   color: #64748b;
   font-size: 14px;
   line-height: 1.6;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .challenge-meta {
@@ -327,6 +337,11 @@
   color: #64748b;
   font-size: 12px;
   line-height: 1.4;
+}
+
+.meta-item span {
+  word-break: break-word;
+  min-width: 0;
 }
 
 .meta-item svg {
@@ -640,11 +655,12 @@
 
 @media (max-width: 600px) {
   .challenges-container {
-    padding: 18px;
+    padding: 16px 12px 32px;
   }
 
   .challenge-card {
-    padding: 19px;
+    padding: 16px 14px;
+    min-height: auto;
   }
 
   .modal-stats {
@@ -656,6 +672,6 @@
   }
 
   .challenge-modal {
-    padding: 24px;
+    padding: 18px 14px;
   }
 }

@@ -432,12 +432,12 @@ function AvailableProjects() {
                 </div>
 
                 {/* TITLE */}
-                <h3>
+                <h3 title={project.title || "Untitled Project"}>
                   {project.title ||
                     "Untitled Project"}
                 </h3>
 
-                <p className="project-desc">
+                <p className="project-desc" title={project.proposalDescription || "No project description available."}>
                   {project.proposalDescription ||
                     "No project description available."}
                 </p>
@@ -449,7 +449,7 @@ function AvailableProjects() {
                     <Building2 size={16} />
                     <div>
                       <span>University</span>
-                      <strong>{university}</strong>
+                      <strong title={university}>{university}</strong>
                     </div>
                   </div>
 
@@ -457,7 +457,7 @@ function AvailableProjects() {
                     <MapPin size={16} />
                     <div>
                       <span>Location</span>
-                      <strong>{location}</strong>
+                      <strong title={location}>{location}</strong>
                     </div>
                   </div>
 
@@ -465,7 +465,7 @@ function AvailableProjects() {
                     <Briefcase size={16} />
                     <div>
                       <span>Faculty Mentor</span>
-                      <strong>{faculty}</strong>
+                      <strong title={faculty}>{faculty}</strong>
                     </div>
                   </div>
 

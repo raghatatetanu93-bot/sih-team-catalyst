@@ -827,12 +827,13 @@ function MyReports() {
 
                         <div className="category-row">
 
-                          <span className="category">
+                          <span className="category" title={report.category}>
                             {report.category}
                           </span>
 
                           <span
                             className={`severity ${report.severity.toLowerCase()}`}
+                            title={`Severity: ${report.severity}`}
                           >
                             {report.severity}
                           </span>
@@ -872,7 +873,7 @@ function MyReports() {
 
                     {/* DESCRIPTION */}
 
-                    <p className="card-description">
+                    <p className="card-description" title={report.description}>
                       {report.description}
                     </p>
 
@@ -881,7 +882,7 @@ function MyReports() {
 
                     <div className="card-meta">
 
-                      <span>
+                      <span title={report.location}>
                         <MapPin size={14} />
                         {report.location}
                       </span>

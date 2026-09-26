@@ -158,6 +158,7 @@ function UniversityProjects() {
 
   return (
     <div className="projects-container">
+
       {/* HEADER */}
       <div className="projects-header">
         <div>
@@ -177,6 +178,7 @@ function UniversityProjects() {
 
       {/* STATS */}
       <div className="project-stats">
+
         <div className="project-stat-card">
           <div className="project-stat-icon blue">
             <FolderKanban size={21} />
@@ -216,10 +218,12 @@ function UniversityProjects() {
             <strong>{averageProgress}%</strong>
           </div>
         </div>
+
       </div>
 
       {/* TOOLBAR */}
       <div className="projects-toolbar">
+
         <div className="project-search">
           <Search size={18} />
           <input
@@ -262,6 +266,7 @@ function UniversityProjects() {
             Clear
           </button>
         )}
+
       </div>
 
       {/* RESULT INFO */}
@@ -289,14 +294,19 @@ function UniversityProjects() {
         </div>
       ) : (
         <div className="projects-grid">
+
           {filteredProjects.map((project) => (
+
             <div
               key={project.id}
               className="project-card"
             >
+
               {/* CARD TOP */}
               <div className="project-card-header">
+
                 <div className="project-card-title">
+
                   <div className="project-category-row">
                     <span className="project-category">
                       {project.category}
@@ -309,17 +319,20 @@ function UniversityProjects() {
                     </span>
                   </div>
 
-                  <h3>{project.title}</h3>
+                  <h3 title={project.title}>{project.title}</h3>
 
-                  <p className="challenge-name">
+                  <p className="challenge-name" title={project.challenge}>
                     <Flag size={14} />
                     {project.challenge}
                   </p>
+
                 </div>
+
               </div>
 
               {/* PROGRESS */}
               <div className="project-progress">
+
                 <div className="progress-header">
                   <span>Project Progress</span>
                   <strong>{project.progress}%</strong>
@@ -345,10 +358,12 @@ function UniversityProjects() {
 
                   <span>{project.nextMilestone}</span>
                 </div>
+
               </div>
 
               {/* META */}
               <div className="project-meta">
+
                 <div className="meta-row">
                   <Users size={16} />
                   <span>
@@ -369,10 +384,12 @@ function UniversityProjects() {
                     {project.startDate} — {project.endDate}
                   </span>
                 </div>
+
               </div>
 
               {/* FOOTER */}
               <div className="project-card-footer">
+
                 <div>
                   <span>Expected Impact</span>
                   <strong>{project.impact}</strong>
@@ -385,9 +402,13 @@ function UniversityProjects() {
                   Details
                   <ArrowRight size={15} />
                 </button>
+
               </div>
+
             </div>
+
           ))}
+
         </div>
       )}
 
@@ -401,6 +422,7 @@ function UniversityProjects() {
             className="project-modal"
             onClick={(e) => e.stopPropagation()}
           >
+
             <button
               className="modal-close"
               onClick={() => setSelectedProject(null)}
@@ -419,6 +441,7 @@ function UniversityProjects() {
             </p>
 
             <div className="modal-progress-box">
+
               <div className="modal-progress-top">
                 <span>Overall Progress</span>
                 <strong>
@@ -433,6 +456,7 @@ function UniversityProjects() {
                   }}
                 ></div>
               </div>
+
             </div>
 
             <p className="modal-description">
@@ -440,6 +464,7 @@ function UniversityProjects() {
             </p>
 
             <div className="modal-details-grid">
+
               <div>
                 <span>Project Lead</span>
                 <strong>{selectedProject.lead}</strong>
@@ -469,6 +494,7 @@ function UniversityProjects() {
                 <span>Next Milestone</span>
                 <strong>{selectedProject.nextMilestone}</strong>
               </div>
+
             </div>
 
             <Link
@@ -478,9 +504,11 @@ function UniversityProjects() {
               Open Collaboration Space
               <ArrowRight size={17} />
             </Link>
+
           </div>
         </div>
       )}
+
     </div>
   );
 }

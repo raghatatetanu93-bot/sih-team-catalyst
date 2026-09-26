@@ -506,6 +506,10 @@
   letter-spacing: 0.8px;
 }
 
+.recommendation-content {
+  min-width: 0;
+}
+
 .recommendation-title {
   display: flex;
   justify-content: space-between;
@@ -513,10 +517,16 @@
   align-items: flex-start;
 }
 
+.recommendation-title > div {
+  min-width: 0;
+  flex: 1;
+}
+
 .recommendation-title h3 {
   margin: 0 0 6px;
   color: #17213a;
   font-size: 17px;
+  word-break: break-word;
 }
 
 .location {
@@ -525,6 +535,11 @@
   gap: 5px;
   color: #64748b;
   font-size: 13px;
+  word-break: break-word;
+}
+
+.location svg {
+  flex-shrink: 0;
 }
 
 .recommendation-content > p {
@@ -532,6 +547,11 @@
   color: #64748b;
   font-size: 14px;
   line-height: 1.6;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .priority-badge {
@@ -926,11 +946,15 @@
 
 @media (max-width: 600px) {
   .decision-page {
-    padding: 18px;
+    padding: 16px 12px 32px;
   }
 
   .decision-stats {
     grid-template-columns: 1fr;
+  }
+
+  .recommendations-section {
+    padding: 16px 14px;
   }
 
   .recommendations-header {
@@ -943,7 +967,11 @@
   }
 
   .recommendation-card {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 14px;
+    gap: 14px;
   }
 
   .recommendation-number {
@@ -952,11 +980,17 @@
 
   .recommendation-title {
     flex-direction: column;
+    gap: 8px;
   }
 
   .recommendation-actions {
     grid-column: auto;
-    justify-content: flex-start;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #edf0f4;
   }
 
   .decision-score-grid,
@@ -969,6 +1003,6 @@
   }
 
   .decision-modal {
-    padding: 24px;
+    padding: 18px 14px;
   }
 }

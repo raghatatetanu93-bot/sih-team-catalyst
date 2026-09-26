@@ -345,6 +345,7 @@
 
 .validation-main-content {
   min-width: 0;
+  flex: 1;
 }
 
 .validation-title-line {
@@ -360,23 +361,35 @@
   color: #303747;
   font-size: 13.5px;
   font-weight: 750;
+  word-break: break-word;
 }
 
 .validation-main p {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 5px;
   margin: 0 0 5px;
   color: #737d8e;
   font-size: 11px;
+  word-break: break-word;
+}
+
+.validation-main p svg {
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .validation-main small {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
   color: #9aa2b0;
   font-size: 10px;
+}
+
+.validation-main small svg {
+  flex-shrink: 0;
 }
 
 
@@ -644,10 +657,10 @@
 }
 
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
 
   .validation-page {
-    padding: 20px 14px 32px;
+    padding: 18px 12px 32px;
   }
 
   .validation-stats {
@@ -657,16 +670,33 @@
   .validation-card-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 8px;
   }
 
   .validation-row {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 12px;
+    padding: 16px 14px;
+  }
+
+  .validation-row > .confidence,
+  .validation-row > .validation-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
 
   .validation-status,
   .review-button {
     grid-column: auto;
+  }
+
+  .review-button {
+    width: 100%;
+    justify-content: center;
   }
 
   .validation-filter {

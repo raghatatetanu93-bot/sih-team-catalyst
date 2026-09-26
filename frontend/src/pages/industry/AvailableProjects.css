@@ -280,6 +280,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.7rem;
   margin-bottom: 0.8rem;
 }
@@ -289,10 +290,12 @@
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  max-width: 100%;
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 700;
+  word-break: break-word;
 }
 
 .category-badge {
@@ -358,14 +361,19 @@
   color: #0f172a;
   font-size: 19px;
   line-height: 1.35;
+  word-break: break-word;
 }
 
 .project-desc {
-  min-height: 72px;
   margin: 0 0 1.1rem;
   color: #64748b;
   font-size: 13px;
   line-height: 1.6;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* META */
@@ -392,6 +400,11 @@
   color: #3b82f6;
 }
 
+.meta-item > div {
+  min-width: 0;
+  flex: 1;
+}
+
 .meta-item span {
   display: block;
   color: #94a3b8;
@@ -404,6 +417,7 @@
   color: #475569;
   font-size: 12px;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 /* FOOTER */

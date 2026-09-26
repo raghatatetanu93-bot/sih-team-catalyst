@@ -511,14 +511,15 @@ function Validation() {
 
                       <div className="validation-title-line">
 
-                        <h3>
-                          {item.category || "Uncategorized"}
+                        <h3 title={item.title || item.category || "Uncategorized"}>
+                          {item.title || item.category || "Uncategorized"}
                         </h3>
 
                         <span
                           className={`priority ${
                             getPriorityClass(item.severity)
                           }`}
+                          title={`Severity: ${item.severity || "Medium"}`}
                         >
                           {item.severity || "Medium"}
                         </span>
@@ -526,7 +527,7 @@ function Validation() {
                       </div>
 
 
-                      <p>
+                      <p title={item.location?.address || item.location || "Location unavailable"}>
                         <MapPin size={13} />
 
                         {item.location?.address ||

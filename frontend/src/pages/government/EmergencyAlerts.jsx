@@ -482,22 +482,23 @@ function EmergencyAlerts() {
                       <div className="alert-title-row">
                         <div>
                           <span className="alert-id">{alert.id}</span>
-                          <h3>{alert.title}</h3>
+                          <h3 title={alert.title}>{alert.title}</h3>
                         </div>
 
                         <span
                           className={`emergency-severity ${
                             alert.severity.toLowerCase()
                           }`}
+                          title={`Severity: ${alert.severity}`}
                         >
                           {alert.severity}
                         </span>
                       </div>
 
-                      <p className="alert-description">{alert.description}</p>
+                      <p className="alert-description" title={alert.description}>{alert.description}</p>
 
                       <div className="alert-meta">
-                        <span>
+                        <span title={alert.location}>
                           <MapPin size={14} />
                           {alert.location}
                         </span>
@@ -517,7 +518,7 @@ function EmergencyAlerts() {
                     {/* AUTHORITY */}
                     <div className="authority-cell">
                       <span>Recommended Authority</span>
-                      <strong>
+                      <strong title={alert.authority}>
                         <Building2 size={14} />
                         {alert.authority}
                       </strong>

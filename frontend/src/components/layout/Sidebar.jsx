@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   AlertTriangle,
@@ -11,21 +12,74 @@ import {
   Brain,
   FilePlus,
   Users,
-  Siren
+  Siren,
+  Menu,
+  X,
+  LogOut,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 import "./Sidebar.css";
 
 function Sidebar({ role = "government" }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
-const citizenItems = [
-  { label: "Dashboard", icon: LayoutDashboard, path: "/citizen" },
-  { label: "Report Issue", icon: FilePlus, path: "/citizen/report" },
-  { label: "My Reports", icon: AlertTriangle, path: "/citizen/reports" },
-  { label: "Emergency", icon: Siren, path: "/citizen/emergency" },
-  { label: "Community", icon: Users, path: "/citizen/community" },
-];
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        return saved;
+      }
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+    } catch {
+      // fallback
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.body.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    try {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = (e) => {
+        if (!localStorage.getItem("theme")) {
+          setTheme(e.matches ? "dark" : "light");
+        }
+      };
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener("change", handleChange);
+        return () => mediaQuery.removeEventListener("change", handleChange);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  const citizenItems = [
+    { label: "Dashboard", icon: LayoutDashboard, path: "/citizen" },
+    { label: "Report Issue", icon: FilePlus, path: "/citizen/report" },
+    { label: "My Reports", icon: AlertTriangle, path: "/citizen/reports" },
+    { label: "Emergency", icon: Siren, path: "/citizen/emergency" },
+    { label: "Community", icon: Users, path: "/citizen/community" },
+  ];
 
   const governmentItems = [
     { label: "Dashboard", icon: LayoutDashboard, path: "/government" },
@@ -62,44 +116,123 @@ const citizenItems = [
       ? industryItems
       : citizenItems;
 
-  return (
-    <aside className="sidebar">
-      <div className="sidebar-logo" style={{cursor: "pointer"}} onClick={() => navigate("/")}>
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+
+  const navContent = (
+    <>
+      <div
+        className="sidebar-logo"
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          setIsOpen(false);
+          navigate("/");
+        }}
+      >
         <div className="logo-mark">SI</div>
         <div>
           <h2>Societal Engine</h2>
-          <span style={{textTransform: 'capitalize'}}>{role}</span>
+          <span style={{ textTransform: "capitalize" }}>{role}</span>
         </div>
       </div>
 
       <nav>
         {items.map((item) => {
           const Icon = item.icon;
+          const active = location.pathname === item.path;
           return (
-           <button
-  className={`sidebar-item ${
-    window.location.pathname === item.path ? "active" : ""
-  }`}
-  key={item.label}
-  onClick={() => navigate(item.path)}
->
+            <button
+              className={`sidebar-item ${active ? "active" : ""}`}
+              key={item.label}
+              onClick={() => {
+                setIsOpen(false);
+                navigate(item.path);
+              }}
+            >
               <Icon size={19} />
               <span>{item.label}</span>
             </button>
           );
         })}
       </nav>
-      <div style={{marginTop: "auto", padding: "1rem"}}>
-        <button onClick={() => {
-          localStorage.removeItem('userRole');
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          navigate('/');
-        }} style={{background: 'transparent', border: 'none', color: '#dc2626', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+
+      <div className="sidebar-footer">
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle-button"
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+        </button>
+
+        <button onClick={handleLogout} className="logout-button">
+          <LogOut size={16} />
           Logout
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile Top Header */}
+      <header className="mobile-header">
+        <div
+          className="mobile-header-brand"
+          onClick={() => {
+            setIsOpen(false);
+            navigate("/");
+          }}
+        >
+          <div className="logo-mark small">SI</div>
+          <span className="mobile-brand-title">Societal Engine</span>
+          <span className="mobile-role-tag">{role}</span>
+        </div>
+        <div className="mobile-header-actions">
+          <button
+            className="mobile-theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
+          </button>
+          <button
+            className="mobile-menu-toggle"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Overlay */}
+      {isOpen && (
+        <div
+          className="mobile-drawer-backdrop"
+          onClick={() => setIsOpen(false)}
+        >
+          <aside
+            className="mobile-drawer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {navContent}
+          </aside>
+        </div>
+      )}
+
+      {/* Desktop Persistent Sidebar */}
+      <aside className="sidebar desktop-sidebar">
+        {navContent}
+      </aside>
+    </>
   );
 }
 

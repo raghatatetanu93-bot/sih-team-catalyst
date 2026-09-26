@@ -223,8 +223,8 @@ function ProblemDetails() {
                 .toUpperCase()}
             </p>
 
-            <h1>
-              {problem.category || "Uncategorized Issue"}
+            <h1 title={problem.title || problem.category || "Uncategorized Issue"}>
+              {problem.title || problem.category || "Uncategorized Issue"}
             </h1>
 
             <div className="problem-meta">

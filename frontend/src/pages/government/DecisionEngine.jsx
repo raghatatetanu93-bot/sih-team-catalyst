@@ -476,8 +476,8 @@ function DecisionEngine() {
                     <div className="recommendation-title">
                       <div>
                         <div className="decision-id">{item.id}</div>
-                        <h3>{item.title}</h3>
-                        <span className="location">
+                        <h3 title={item.title}>{item.title}</h3>
+                        <span className="location" title={item.location}>
                           <MapPin size={14} />
                           {item.location}
                         </span>
@@ -485,20 +485,21 @@ function DecisionEngine() {
 
                       <span
                         className={`priority-badge ${item.priority.toLowerCase()}`}
+                        title={`Priority: ${item.priority}`}
                       >
                         {item.priority}
                       </span>
                     </div>
 
-                    <p>{item.recommendation}</p>
+                    <p title={item.recommendation}>{item.recommendation}</p>
 
                     <div className="recommendation-meta">
-                      <span>
+                      <span title={`Stakeholder: ${item.stakeholder}`}>
                         <Building2 size={15} />
                         {item.stakeholder}
                       </span>
 
-                      <span>
+                      <span title={`Institution: ${item.institution}`}>
                         <GraduationCap size={15} />
                         {item.institution}
                       </span>

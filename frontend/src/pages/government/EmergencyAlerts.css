@@ -437,7 +437,9 @@ button.emergency-stat:hover {
 
 /* =========================================================
    ALERT MAIN
-   ========================================================= */
+.emergency-alert-main {
+  min-width: 0;
+}
 
 .alert-title-row {
   display: flex;
@@ -449,6 +451,7 @@ button.emergency-stat:hover {
 
 .alert-title-row > div {
   min-width: 0;
+  flex: 1;
 }
 
 .alert-id {
@@ -466,6 +469,7 @@ button.emergency-stat:hover {
   font-size: 17px;
   line-height: 1.25;
   font-weight: 750;
+  word-break: break-word;
 }
 
 .emergency-severity {
@@ -497,6 +501,7 @@ button.emergency-stat:hover {
   color: #737f91;
   font-size: 12px;
   line-height: 1.55;
+  word-break: break-word;
 }
 
 .alert-meta {
@@ -512,10 +517,12 @@ button.emergency-stat:hover {
   gap: 5px;
   color: #788496;
   font-size: 11px;
+  word-break: break-word;
 }
 
 .alert-meta svg {
   color: #8995a6;
+  flex-shrink: 0;
 }
 
 /* =========================================================
@@ -732,6 +739,7 @@ button.emergency-stat:hover {
   margin: 0;
   font-size: 17px;
   font-weight: 750;
+  color: #ffffff;
 }
 
 .response-live {
@@ -1150,7 +1158,7 @@ button.emergency-stat:hover {
 
 @media (max-width: 520px) {
   .emergency-page {
-    padding: 20px 14px 32px;
+    padding: 16px 12px 32px;
   }
 
   .emergency-heading {
@@ -1158,7 +1166,7 @@ button.emergency-stat:hover {
   }
 
   .emergency-header h1 {
-    font-size: 27px;
+    font-size: 26px;
   }
 
   .emergency-system-status {
@@ -1170,11 +1178,26 @@ button.emergency-stat:hover {
   .alerts-card-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 8px;
+    padding: 18px 16px;
+  }
+
+  .emergency-alert {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .alert-severity-icon {
+    display: none;
   }
 
   .alert-title-row {
     flex-direction: column;
     align-items: flex-start;
+    gap: 6px;
   }
 
   .alert-meta {
@@ -1183,8 +1206,25 @@ button.emergency-stat:hover {
     gap: 7px;
   }
 
+  .authority-cell {
+    padding-top: 10px;
+    border-top: 1px dashed #e2e8f0;
+    width: 100%;
+  }
+
   .alert-status-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #edf0f4;
+  }
+
+  .alert-actions {
+    margin-left: auto;
   }
 
   .response-metrics {

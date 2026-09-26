@@ -24,7 +24,7 @@ import {
   Loader2,
   ChevronRight,
   Building2,
-} from "lucide-react";
+ } from "lucide-react";
 
 const JHARKHAND_DISTRICTS = [
   "Ranchi",
