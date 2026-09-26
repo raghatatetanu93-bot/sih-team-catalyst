@@ -50,6 +50,36 @@ app.use(
 );
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Health Check & Root Endpoints
+app.get('/', (req, res) => {
+  res.status(200).json({
+    name: 'SolveSphere API',
+    status: 'running',
+    health: '/api/health',
+  });
+});
+
+app.get('/api/health', (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatus = {
+    0: 'Disconnected',
+    1: 'Connected',
+    2: 'Connecting',
+    3: 'Disconnecting',
+  }[dbState] || 'Unknown';
+
+  res.status(200).json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    database: {
+      status: dbStatus,
+      connected: dbState === 1,
+    },
+  });
+});
+
 app.use('/api/analytics', analyticsRoutes);
 // Mounted Routes
 app.use('/api/problems', problemRoutes);
@@ -57,8 +87,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/clusters', clusterRoutes); 
 app.use('/api/universities', universityRoutes);
 app.use('/api/partners', partnerRoutes);
-app.use('/api/projects', projectRoutes);       // <-- ADDED THIS
-app.use('/api/milestones', milestoneRoutes);   // <-- MOVED BELOW express.json()
+app.use('/api/projects', projectRoutes);
+app.use('/api/milestones', milestoneRoutes);
 
 const startServer = async () => {
     try {
